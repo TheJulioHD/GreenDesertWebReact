@@ -10,7 +10,6 @@ export const SignUp = () => {
     
     <>
 
-
       <Typography variant='h1'>¡Bienvenido!</Typography>
       <Typography variant='h2'>Registra tu cuenta</Typography>
       

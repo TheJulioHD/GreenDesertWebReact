@@ -9,23 +9,28 @@ import React from 'react'
 
 const Navbar:React.FC<{}> = () => {
   return (
+
     <Box sx={{flexGrow:1}}>
         <AppBar position='fixed'>
             <Toolbar>
                 <Grid container direction="row" justifyContent="space-between" alignItems="center">
                     <Grid item>
-                        <Typography>GreenDesert</Typography>
+                        <Typography variant='h4'>GreenDesert</Typography>
                     </Grid>
                     <Grid item>
                         <Stack direction='row' spacing={2}>
-                            <Button variant='contained' color='success'> Login</Button>
-                            <Button variant='contained' color='secondary'> Register</Button>
+                            <Button 
+                                variant='contained' 
+                                sx={{backgroundColor: 'primary.light'
+                                }}>Login</Button>
+                            <Button variant='contained' sx={{backgroundColor: 'primary.light'}}> Register</Button>
                         </Stack>
                     </Grid>
                 </Grid>
             </Toolbar>
         </AppBar>
     </Box>
+
   )
 }
 
