@@ -7,11 +7,17 @@ const Router:React.FC<{}> =() =>{
   return (
         <Routes>
             <Route path='/' element={<RouterLayout/>}>
-                <Route path='/' element={<HomePage/>}/>
+            <Route path='/' element={<HomePage/>}/>
+                <Route path='/about' element={<About/>}/>
 
             </Route>
+            
         </Routes>
   )
+}
+
+function About() {
+  return <>about</>   
 }
 
 export default Router
