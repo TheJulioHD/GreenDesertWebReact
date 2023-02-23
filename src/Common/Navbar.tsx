@@ -1,37 +1,44 @@
-import { Box } from '@mui/material'
-import AppBar from '@mui/material/AppBar'
-import Button from '@mui/material/Button'
-import Grid from '@mui/material/Grid'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import { Stack } from '@mui/system'
-import React from 'react'
+import { Google, Logout, MenuOutlined } from "@mui/icons-material"
+import { Grid, AppBar, IconButton, Toolbar, Typography } from "@mui/material"
+import React from "react"
 
-const Navbar:React.FC<{}> = () => {
-  return (
-
-    <Box sx={{flexGrow:1}}>
-        <AppBar position='fixed'>
-            <Toolbar>
-                <Grid container direction="row" justifyContent="space-between" alignItems="center">
-                    <Grid item>
-                        <Typography variant='h4'>GreenDesert</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Stack direction='row' spacing={2}>
-                            <Button 
-                                variant='contained' 
-                                sx={{backgroundColor: 'primary.light'
-                                }}>Login</Button>
-                            <Button variant='contained' sx={{backgroundColor: 'primary.light'}}> Register</Button>
-                        </Stack>
-                    </Grid>
-                </Grid>
-            </Toolbar>
-        </AppBar>
-    </Box>
-
-  )
+interface Props{
+  drawerWidth : number;
 }
 
-export default Navbar
+export const Navbar = ({drawerWidth} : Props) => {
+  return (
+    <AppBar 
+      position="fixed"
+      sx={{
+        width: {sm: `calc(100% - ${drawerWidth}px)`},
+        ml: { sm: `${drawerWidth}px`}
+      }}
+    >
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          edge='start'
+          sx={{
+            mr: 2, display: {sm: 'none'}
+          }}
+        >
+          <MenuOutlined/>
+        </IconButton>
+
+        <Grid container
+          direction='row'
+          justifyContent='space-between'
+          alignItems='center'
+        >
+          <Typography variant="h6" noWrap component='div'>Green desert</Typography>
+          
+          <IconButton>
+            <Logout color="error"/>
+          </IconButton>
+        </Grid>
+
+      </Toolbar>
+    </AppBar>
+  )
+}
