@@ -11,9 +11,6 @@ export const AuthRoutes = () => {
 
     <>
     
-    <Navbar drawerWidth={240}/>
-    <SideBar drawerWidth={240}/>
-
     <Routes>
       <Route path='/login' element={<Login />}/>
       <Route path='/signUp' element={<SignUp />}/>
@@ -21,7 +18,7 @@ export const AuthRoutes = () => {
       <Route path='/*' element={<Navigate to='login'/>}/>
 
     </Routes>
-    
+
     </>
 
   )
