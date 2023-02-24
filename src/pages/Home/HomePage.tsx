@@ -4,6 +4,6 @@ export const HomePage = () => {
   return (
 
     <Typography variant="h1">¡Bienvenido!</Typography>
-
+    
   )
 }
