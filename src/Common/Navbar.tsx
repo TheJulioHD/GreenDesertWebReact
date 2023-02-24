@@ -2,11 +2,12 @@ import { Google, Logout, MenuOutlined } from "@mui/icons-material"
 import { Grid, AppBar, IconButton, Toolbar, Typography } from "@mui/material"
 import React from "react"
 
-interface Props{
+interface props{
   drawerWidth : number;
 }
 
-export const Navbar = ({drawerWidth} : Props) => {
+
+export const Navbar = ({drawerWidth} : props) => {
   return (
     <AppBar 
       position="fixed"
