@@ -1,7 +1,7 @@
 import { Button, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import React from 'react'
 
-const Inventoriypage = () => {
+const Proveedorespage = () => {
   return (
     <div>
 
@@ -11,7 +11,10 @@ const Inventoriypage = () => {
                     <TableCell>#</TableCell>
                     <TableCell>Material</TableCell>
                     <TableCell>Proceedor</TableCell>
-                    <TableCell>Codigo Material</TableCell>
+                    <TableCell>Codigo Proveedor</TableCell>
+                    <TableCell>Nombre</TableCell>
+                    <TableCell>Direccion</TableCell>
+                    <TableCell>Telefono</TableCell>
                     <TableCell>Estatus</TableCell>
                     <TableCell>Observaciones</TableCell>
                     <TableCell>Editar</TableCell>
@@ -24,6 +27,9 @@ const Inventoriypage = () => {
                     <TableCell>a</TableCell>
                     <TableCell>a</TableCell>
                     <TableCell>a</TableCell>
+                    <TableCell>Nombre</TableCell>
+                    <TableCell>Direccion</TableCell>
+                    <TableCell>Telefono</TableCell>
                     <TableCell>a</TableCell>
                     <TableCell>a</TableCell>
                     <TableCell><Button color='success' variant="outlined">Edit</Button>&nbsp; <Button color='error' variant="outlined">Deleted</Button></TableCell>
@@ -34,4 +40,4 @@ const Inventoriypage = () => {
   )
 }
 
-export default Inventoriypage
+export default Proveedorespage

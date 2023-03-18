@@ -1,0 +1,37 @@
+import { Button, Grid, TextField, Typography } from '@mui/material'
+import React from 'react'
+
+const AddProveedorespage = () => {
+    return (
+        <div>
+            <Typography>Agregar proveedor </Typography><br />
+
+            <Grid container justifyContent='space-between'  direction={'row'}>
+                <form >
+                    
+                    <Typography>Material</Typography>
+                    <TextField id="outlined-basic" label="Material" variant="outlined" />
+                    <Typography>Cantidad</Typography>
+                    <TextField id="outlined-basic" label="Cantidad" variant="outlined" />
+                    <Typography>Codigo</Typography>
+                    <TextField id="outlined-basic" label="Codigo" variant="outlined" />
+                    <Typography>Nombre</Typography>
+                    <TextField id="outlined-basic" label="Nombre" variant="outlined" />
+                    <Typography>Direccion</Typography>
+                    <TextField id="outlined-basic" label="Direccion" variant="outlined" />
+                    <Typography>Telefono</Typography>
+                    <TextField id="outlined-basic" label="Telefono" variant="outlined" />
+                    <Typography>Estatus</Typography>
+                    <TextField id="outlined-basic" label="Estatus" variant="outlined" />
+                    <Typography>Observaciones</Typography>
+                    <TextField id="outlined-basic" label="Observaciones" variant="outlined" />
+                        <br /><br />
+                    <Button variant="outlined">Agregrar</Button>
+                </form>
+            </Grid>
+
+        </div>
+    )
+}
+
+export default AddProveedorespage

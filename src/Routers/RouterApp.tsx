@@ -5,6 +5,7 @@ import { AppRoutes } from './AppRoutes'
 import { AuthRoutes } from './AuthRoutes'
 import { EmployeeRoutes } from './EmployeeRoutes'
 import { InvetoryRoutes } from './InvetoryRoutes'
+import { ProveedoresRoutes } from './ProveedoresRputes'
 
 export const RouterApp = () => {
   
@@ -14,6 +15,7 @@ export const RouterApp = () => {
       <Route path='/auth/*' element={<AuthRoutes/>}/>
       <Route path='/employee/*' element={<EmployeeRoutes/>} />
       <Route path='/invetory/*' element={<InvetoryRoutes/>} />
+      <Route path='/Proveedores/*' element={<ProveedoresRoutes/>} />
     </Routes>
   )
   
