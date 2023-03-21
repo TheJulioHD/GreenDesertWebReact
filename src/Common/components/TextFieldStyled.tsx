@@ -9,7 +9,7 @@ interface Props {
   disabled? : boolean,
   readOnly? : boolean,
   helperText? : string,
-  isMultiline? : boolean, //Options: small, medium, 
+  isMultiline? : boolean, 
   fullWidth? : boolean,
 }
 
@@ -32,6 +32,9 @@ export const TextFieldStyled = ({id, labelText, required, type, disabled, readOn
           <InputAdornment position="start"> 
           </InputAdornment>
         )
+      }}
+      sx={{
+        
       }}
       fullWidth = {fullWidth}
     />
