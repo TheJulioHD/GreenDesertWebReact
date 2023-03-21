@@ -1,19 +1,39 @@
-import { TextField } from "@mui/material"
+import { AccountCircle, Fullscreen } from "@mui/icons-material"
+import { InputAdornment, TextField } from "@mui/material"
 
 interface Props {
-
-  labelText : string
-
+  id : string,
+  labelText : string,
+  required? : boolean,
+  type? : string, //Type is for password and number
+  disabled? : boolean,
+  readOnly? : boolean,
+  helperText? : string,
+  isMultiline? : boolean, //Options: small, medium, 
+  fullWidth? : boolean,
 }
 
 
-export const TextFieldStyled = ({labelText} : Props) => {
+export const TextFieldStyled = ({id, labelText, required, type, disabled, readOnly, helperText, isMultiline, fullWidth} : Props) => {
   return (
     
-    <TextField
-    
-    
-    
+    <TextField 
+      multiline = {isMultiline}
+      helperText={helperText}
+      id={id}
+      label={labelText}
+      variant='outlined'
+      required = {required}
+      type={type}
+      disabled = {disabled}
+      InputProps={{
+        readOnly: readOnly, 
+        startAdornment: ( //waiting to implements
+          <InputAdornment position="start"> 
+          </InputAdornment>
+        )
+      }}
+      fullWidth = {fullWidth}
     />
   )
 }
