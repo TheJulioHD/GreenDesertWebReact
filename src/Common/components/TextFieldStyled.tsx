@@ -34,7 +34,7 @@ export const TextFieldStyled = ({id, labelText, required, type, disabled, readOn
         )
       }}
       sx={{
-        
+        borderRadius: '5px',
       }}
       fullWidth = {fullWidth}
     />
