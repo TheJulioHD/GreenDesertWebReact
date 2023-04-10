@@ -1,13 +1,20 @@
 import { Google, Logout, MenuOutlined } from "@mui/icons-material"
 import { Grid, AppBar, IconButton, Toolbar, Typography } from "@mui/material"
 import React from "react"
-
+import { useNavigate } from "react-router-dom";
+import { getAuth, signOut } from 'firebase/auth'
 interface props{
   drawerWidth : number;
 }
-
-
+const navigate =useNavigate() 
+const auth = getAuth()
+const handleSubmit = (evt: React.FormEvent<HTMLFormElement| HTMLButtonElement>)=>{
+  evt.preventDefault()
+  signOut(auth)
+  navigate('/auth/signup')
+}
 export const Navbar = ({drawerWidth} : props) => {
+  
   return (
     <AppBar 
       position="fixed"
@@ -34,7 +41,7 @@ export const Navbar = ({drawerWidth} : props) => {
         >
           <Typography variant="h6" noWrap component='div'>Green desert</Typography>
           
-          <IconButton>
+          <IconButton onClick={handleSubmit}>
             <Logout color="error"/>
           </IconButton>
         </Grid>
