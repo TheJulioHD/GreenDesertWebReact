@@ -31,17 +31,17 @@ export const SignUp = () => {
     setAuthing(true)
     evt.preventDefault();
     console.log(user)
-    createUserWithEmailAndPassword(auth, user.email, user.password).then( async(res)=>{
-      console.log(res.user.uid)
-      user.uuid = res.user.uid
-      const resp = await GDApi.post('user', {user}).then(
-        (res) => console.log(res.data)
-      ).catch((err)=>console.log(err))
-      navigate('/')
-    }).catch((err)=>{
-      console.log(err)
-      setAuthing(false)
-    })
+    // createUserWithEmailAndPassword(auth, user.email, user.password).then( async(res)=>{
+    //   console.log(res.user.uid)
+    //   user.uuid = res.user.uid
+    //   const resp = await GDApi.post('user', {user}).then(
+    //     (res) => console.log(res.data)
+    //   ).catch((err)=>console.log(err))
+    //   navigate('/')
+    // }).catch((err)=>{
+    //   console.log(err)
+    //   setAuthing(false)
+    // })
   }
 
   
@@ -111,7 +111,7 @@ export const SignUp = () => {
             }}/>
 
             
-          <TextField
+          {/* <TextField
             name='status'
             margin='normal'
             label='status'
@@ -121,8 +121,8 @@ export const SignUp = () => {
               input: {color: 'white'},
               border: 'secondary.main',
               backgroundColor: 'primary.light'
-            }}/>
-
+            }}/> */}
+{/* 
           <TextField
             name='role'
             margin='normal'
@@ -144,7 +144,7 @@ export const SignUp = () => {
               input: {color: 'white'},
               border: 'secondary.main',
               backgroundColor: 'primary.light'
-            }}/>
+            }}/> */}
             
       </Grid>
       
