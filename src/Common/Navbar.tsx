@@ -6,15 +6,15 @@ import { getAuth, signOut } from 'firebase/auth'
 interface props{
   drawerWidth : number;
 }
-const navigate =useNavigate() 
-const auth = getAuth()
-const handleSubmit = (evt: React.FormEvent<HTMLFormElement| HTMLButtonElement>)=>{
-  evt.preventDefault()
-  signOut(auth)
-  navigate('/auth/signup')
-}
+
 export const Navbar = ({drawerWidth} : props) => {
-  
+  const navigate = useNavigate() 
+  const auth = getAuth()
+  const handleSubmit = (evt: React.FormEvent<HTMLFormElement| HTMLButtonElement>)=>{
+    evt.preventDefault()
+    signOut(auth)
+    navigate('/auth/signup')
+  }  
   return (
     <AppBar 
       position="fixed"

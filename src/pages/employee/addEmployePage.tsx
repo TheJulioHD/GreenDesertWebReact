@@ -1,17 +1,78 @@
 import { Person } from '@mui/icons-material'
 import { Button, Grid, TextField, Typography } from '@mui/material'
-import React from 'react'
+import { getAuth } from 'firebase/auth'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { employeeModel } from '../../assets/models/employee.model'
+import axios from 'axios'
 
 export const AddEmployePage = () => {
+  
+  const auth= getAuth();
+  const navigate = useNavigate()
+  const [authing, setAuthing] = useState(false)
+
+  const[employee, setEmployee] = useState<employeeModel>({
+      name: '',
+      fristSurname: '',
+      secondSurname: '',
+      birthday: '',
+      email: '',
+      phonenumber: '',
+      status: '',
+    
+  })
+  const url= 'http://localhost:3000/user'
+  const handleimputChange = ({target:{name, value}}:any) =>{
+    
+    // console.log(evt.currentTarget.value)
+    console.log(name)
+    setEmployee({...employee, [name]:value})
+  }
+  
+  const handleSubmit = async(evt: React.FormEvent<HTMLFormElement| HTMLButtonElement>) =>{
+    evt.preventDefault()
+    console.log(employee)
+
+    
+    const newEmployee ={
+      name: employee.name,
+      fristSurname: employee.fristSurname,
+      secondSurname: employee.secondSurname,
+      birthday: employee.birthday,
+      email: employee.email,
+      phonenumber: employee.phonenumber,
+      status: 'activo',
+    }
+    await axios({
+      method:'POST',
+      url:'http://localhost:3000/employee',
+      data:JSON.stringify(newEmployee),
+      headers:{
+        'Content-Type':'application/json'
+      }
+    }).then(res => console.log(res.data))
+    .catch(err => console.log(err))
+  }
   {/*
     Atributes
       name
-      fistSurname
+      fristSurname
       secondSurname
-      birthdate
+      birthday
       address
       email
-      phoneNumber
+      phonenumber
+      status
+  */}
+  {/*
+    Atributes
+      name
+      fristSurname
+      secondSurname
+      birthday
+      email
+      phonenumber
       status
   */}
   return (
@@ -46,23 +107,28 @@ export const AddEmployePage = () => {
         textAlign='center'>
 
           <Typography variant='h6'>Nombre</Typography>
-          <TextField />
+          <TextField name='name' onChange={handleimputChange} />
 
           <Typography variant='h6'>Apellido paterno</Typography>
-          <TextField />
+          <TextField  name='fristSurname' onChange={handleimputChange}/>
 
           <Typography variant='h6'>Apellido materno</Typography>
-          <TextField />
+          <TextField name='secondSurname' onChange={handleimputChange}/>
 
           <Typography variant='h6'>Fecha de nacimiento</Typography>
-          <TextField />
+          <TextField  name='birthday' type='date' onChange={handleimputChange}/>
 
           <Typography variant='h6'>Correo electronico</Typography>
-          <TextField />
+          <TextField  name='email' onChange={handleimputChange}/>
 
           <Typography variant='h6'>numero celular</Typography>
-          <TextField />
+          <TextField name='phonenumber' onChange={handleimputChange}/>
 
+          
+      </Grid>
+      
+      <Grid item>
+        <Button variant='contained' onClick={handleSubmit}>Registrar empleado</Button>
       </Grid>
       </Grid>
     </>
