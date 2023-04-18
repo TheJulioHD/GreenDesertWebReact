@@ -1,5 +1,5 @@
 import { Person } from '@mui/icons-material'
-import { Box, Button, Grid, TextField, Typography } from '@mui/material'
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material'
 import React, { useState} from 'react'
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
@@ -8,14 +8,17 @@ import axios from 'axios'
 import { userModel } from '../../../assets/models/user.model'
 import * as yup from 'yup'
 import { useFormik } from 'formik'
+import { SelectStyled } from '../../../Common/components/Select'
+import { Color } from '../../../Theme/Colors/Color'
 // import {createUserWithEmai1AndPassword} from 'firebase/auth'
 // import {auth} from '../../firebase/firebase'
 
 export const SignUp = () => {
-  const auth= getAuth();
-  const navigate = useNavigate()
-  const [authing, setAuthing] = useState(false)
 
+  //Hooks
+  const [status, setStatus] = React.useState('');
+  const [authing, setAuthing] = useState(false)
+  
   const[user, setUser] = useState<userModel>({
     uuid:'',
     email:'',
@@ -25,7 +28,17 @@ export const SignUp = () => {
     employee:0,
     
   })
+  
+  //Firebase utilities.
   const url= 'http://localhost:3000/user'
+  const auth= getAuth();
+  const navigate = useNavigate()
+  
+  //Handles
+  const handleChange = (event: SelectChangeEvent) => {
+    setStatus(event.target.value as string);
+  }
+
   // const handleimputChange = ({target:{name, value}}:any) =>{
     
   //    console.log(evt.currentTarget.value)
@@ -84,9 +97,9 @@ export const SignUp = () => {
   const validationSchema = yup.object().shape({
     email: yup.string().trim().required('El email tiene que ser requerido').email('ingresa un email valido'),
     password: yup.string().trim().required('La contraseña es requerida').min(8, 'Debe de contener al menos 8 caracteres').uppercase('Debe contener una mayuscula'),
-    status: yup.string().trim().required('El status tiene que ser requerido'),
-    role: yup.number().required('El rol tiene que ser requerido').positive('el valor tiene que ser positivo'),
-    employee: yup.number().required('El empleado tiene que ser requerido').positive('el valor tiene que ser positivo')
+    status: yup.string().required('El status tiene que ser requerido'),
+    //role: yup.number().required('El rol tiene que ser requerido').positive('el valor tiene que ser positivo'),
+    //employee: yup.number().required('El empleado tiene que ser requerido').positive('el valor tiene que ser positivo')
   });
 
   const formik = useFormik<userModel>({
@@ -100,6 +113,7 @@ export const SignUp = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      alert("asdasdasd");
       //alert(JSON.stringify(values, null, 2));
       createUserWithEmailAndPassword(auth, values.email, values.password).then(async(res) =>{
         console.log(res.user.uid)
@@ -111,6 +125,8 @@ export const SignUp = () => {
             role: values.role,
             employee: values.employee
         }
+
+        console.log(newuser);
         await axios({
           method:'POST',
           url:'http://localhost:3000/user',
@@ -121,7 +137,7 @@ export const SignUp = () => {
         }).then(res => console.log(res.data))
         .catch(err => console.log(err))
   
-        navigate('/')
+        navigate('/auth/signin')
       })
     },
   })
@@ -178,7 +194,7 @@ export const SignUp = () => {
               sx={{
                 input: {color: 'white'},
                 border: 'secondary.main',
-                backgroundColor: 'primary.light'
+                backgroundColor: Color.green
               }}/>
 
             <br />
@@ -195,40 +211,35 @@ export const SignUp = () => {
               sx={{
                 input: {color: 'white'},
                 border: 'secondary.main',
-                backgroundColor: 'primary.light'
+                backgroundColor: Color.green
               }}/>
 
              <br /> 
-            <TextField
-              name='status'
-              margin='normal'
-              label='status'
-              variant='filled'
-              value={formik.values.status}
-              onChange={formik.handleChange}
-              error={formik.touched.status && Boolean(formik.errors.status)}
-              helperText={formik.touched.status && formik.errors.status}
-              sx={{
-                input: {color: 'white'},
-                border: 'secondary.main',
-                backgroundColor: 'primary.light'
-              }}/>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Estado</InputLabel>
+                <Select
+                  name='status'
+                  error={formik.touched.status && Boolean(formik.errors.status)}
+                  //helperText={formik.touched.status && formik.errors.status}
+                  variant='filled'
+                  sx={{
+                    backgroundColor: Color.green
+                  }}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={formik.values.status}
+                  label="sss"
+                  onChange={formik.handleChange}
+                  >
+                  <MenuItem value={1}>Activo</MenuItem>
+                  <MenuItem value={0}>Incativo</MenuItem>
+                </Select>
+              </FormControl>
+
+
               <br />
-            <TextField
-              name='role'
-              margin='normal'
-              label='role'
-              variant='filled'
-              type='number'
-              value={formik.values.role}
-              onChange={formik.handleChange}
-              error={formik.touched.role && Boolean(formik.errors.role)}
-              helperText={formik.touched.role && formik.errors.role}
-              sx={{
-                input: {color: 'white'},
-                border: 'secondary.main',
-                backgroundColor: 'primary.light'
-              }}/>
+
+              
               <br />
             <TextField
               name='employee'
@@ -243,7 +254,7 @@ export const SignUp = () => {
               sx={{
                 input: {color: 'white'},
                 border: 'secondary.main',
-                backgroundColor: 'primary.light'
+                backgroundColor: Color.green
               }}/>
 
           <Grid item>

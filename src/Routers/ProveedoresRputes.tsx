@@ -1,7 +1,7 @@
 import { Box, Toolbar } from '@mui/material'
 import React from 'react'
 import { Route, Router, Routes } from 'react-router-dom'
-import { Navbar, SideBar } from '../Common'
+import { Navbar, SideBar } from '../Common/layout'
 import { AddEmployePage } from '../pages/employee/addEmployePage'
 import Addinvetorypage from '../pages/Inventory/addinvetorypage'
 
