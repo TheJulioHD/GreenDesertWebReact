@@ -5,37 +5,27 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import {HomePage} from '../pages/Home/HomePage'
 
 import {Navbar, SideBar}  from '../Common/layout';
-import { Index } from '../pages/presentation';
-import { Toldbar } from '../Common/layout/toldbar';
 
-export const AppRoutes = () => {
+export const HomeRouter = () => {
   return (
 
-    
     <Box sx={{display: 'flex'}}>
+      
+      <Navbar drawerWidth={240}/>
+      <SideBar drawerWidth={240}/>
 
       <Box component='main' sx={{flexGrow: 1, p: 3}}>
+        <Toolbar/>
 
-      <Toldbar/>
+        <Routes>
+        <Route path='/home' element={<HomePage/>}/>
 
-      <div>-</div>
-
-      <Routes>
-        <Route path='/welcome' element={<Index/>}/>
-
-        <Route path='/*' element={<Navigate to='welcome'/>}/>
+        <Route path='/*' element={<Navigate to='home'/>}/>
       </Routes>
 
       </Box>
-
-    </Box>
-
-
-
-
       
-
-
+    </Box>
 
   )
 }
