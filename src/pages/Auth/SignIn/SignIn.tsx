@@ -21,8 +21,10 @@ export const SignIn = () => {
     status:'',
     role:0,
     employee:0,
-    
   })
+
+  //alpha
+
   const url= 'http://localhost:3000/user'
   // const handleimputChange = ({target:{name, value}}:any) =>{
     
