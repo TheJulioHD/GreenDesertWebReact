@@ -8,6 +8,7 @@ import { InvetoryRoutes } from './InvetoryRoutes'
 import { ProveedoresRoutes } from './ProveedoresRputes'
 import AuthRouter from '../services/auth/AuthRouter'
 import { Home } from '@mui/icons-material'
+import { HomeRouter } from './HomeRouter'
 
 export const RouterApp = () => {
   
@@ -18,7 +19,7 @@ export const RouterApp = () => {
       <Route path='/employee/*' element={<AuthRouter><EmployeeRoutes/></AuthRouter>} />
       <Route path='/invetory/*' element={<AuthRouter><InvetoryRoutes/></AuthRouter>} />
       <Route path='/Proveedores/*' element={<AuthRouter><ProveedoresRoutes/></AuthRouter>} />
-      <Route path='/home/*' element={<AuthRouter><Home/></AuthRouter>} />
+      <Route path='/home/*' element={<AuthRouter><HomeRouter/></AuthRouter>} />
     </Routes>
   )
   

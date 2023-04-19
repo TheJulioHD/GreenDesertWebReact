@@ -19,7 +19,7 @@ const AuthRouter:React.FunctionComponent<IAuthRouterProps> = (props) => {
             setLoading(false)
         }else{
             console.log('unauthorized')
-            navigate('/auth/signup')
+            navigate('/auth/signin')
         }
     });
     if(loading) return<p>Loading ....</p>
