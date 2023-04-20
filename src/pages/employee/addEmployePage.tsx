@@ -139,7 +139,6 @@ export const AddEmployePage = () => {
       }).catch((err) => {console.log(err)})
 
 
-      navigate('/')
     },
   })
   return (
