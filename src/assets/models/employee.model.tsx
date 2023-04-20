@@ -1,3 +1,5 @@
+import { userModel } from "./user.model";
+
 export interface employeeModel{
       name:string,
       fristSurname:string,
@@ -6,4 +8,6 @@ export interface employeeModel{
       email:string,
       phonenumber:string,
       status?:string,
+      password:string,
+      user: userModel
 }
