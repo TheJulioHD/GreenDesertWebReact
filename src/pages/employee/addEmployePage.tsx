@@ -1,6 +1,6 @@
 import { Person } from '@mui/icons-material'
 import { Button, Grid, TextField, Typography } from '@mui/material'
-import { getAuth } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { employeeModel } from '../../assets/models/employee.model'
@@ -14,16 +14,17 @@ export const AddEmployePage = () => {
   const navigate = useNavigate()
   const [authing, setAuthing] = useState(false)
 
-  const[employee, setEmployee] = useState<employeeModel>({
-      name: '',
-      fristSurname: '',
-      secondSurname: '',
-      birthday: '',
-      email: '',
-      phonenumber: '',
-      status: '',
+  // const[employee, setEmployee] = useState<employeeModel>({
+  //     name: '',
+  //     fristSurname: '',
+  //     secondSurname: '',
+  //     birthday: '',
+  //     email: '',
+  //     phonenumber: '',
+  //     status: '',
+  //     user: {}
     
-  })
+  // })
   const url= 'http://localhost:3000/user'
   // const handleimputChange = ({target:{name, value}}:any) =>{
     
@@ -85,6 +86,7 @@ export const AddEmployePage = () => {
       birthday: yup.string().trim().required('La fecha tiene que ser requerida'),
       email: yup.string().trim().required('El email tiene que ser requerido').email('ingresa un email valido'),
       phonenumber: yup.string().trim().required('El telefono tiene que ser requerido').min(10,'tiene que ser un minimo de 10 nuemros').max(10, 'tiene que tener un maximo de 10 numeros'),
+      password: yup.string().trim().required('La contraseña tiene que ser requerida').min(6,'tiene que ser un minimo de 6 nuemros'),
       
   });
 
@@ -97,28 +99,45 @@ export const AddEmployePage = () => {
       email: '',
       phonenumber: '',
       status: '',
+      password:'',
+      user: {
+        uuid:'',
+        password:'',
+        role:0
+      }
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       //alert(JSON.stringify(values, null, 2));
-      const newEmployee ={
-        name: values.name,
-        fristSurname: values.fristSurname,
-        secondSurname: values.secondSurname,
-        birthday: values.birthday,
-        email: values.email,
-        phonenumber: values.phonenumber,
-        status: 'activo'
-      }
-      await axios({
-        method:'POST',
-        url:'http://localhost:3000/employee',
-        data:JSON.stringify(newEmployee),
-        headers:{
-          'Content-Type':'application/json'
+      
+      createUserWithEmailAndPassword(auth, values.email, values.password).then(async(res) =>{
+        const newEmployee ={
+          name: values.name,
+          fristSurname: values.fristSurname,
+          secondSurname: values.secondSurname,
+          birthday: values.birthday,
+          email: values.email,
+          phonenumber: values.phonenumber,
+          status: 'activo',
+          user: {
+            uuid:'',
+            password: values.password,
+            role: 1
+          }
         }
-      }).then(res => console.log(res.data))
-      .catch(err => console.log(err))
+        newEmployee.user.uuid = res.user.uid
+        await axios({
+          method:'POST',
+          url:'http://localhost:3000/employee',
+          data:JSON.stringify(newEmployee),
+          headers:{
+            'Content-Type':'application/json'
+          }
+        }).then(res => console.log(res.data))
+        .catch(err => console.log(err))
+          
+      }).catch((err) => {console.log(err)})
+
 
       navigate('/')
     },
@@ -129,17 +148,19 @@ export const AddEmployePage = () => {
       <Grid container
       direction={'column'}
       alignItems='center'>
-        <Typography variant='h2'>Registrar usuario</Typography>
+        <Typography variant='h2'>Registrar empleado</Typography>
       </Grid>
 
-      <Grid container
+      <Grid container 
+      columnSpacing={{xs:1, sm:2 , md:3}}
+      direction={'row'}
       sx={{
         backgroundColor: 'primary.light',
         borderRadius: '5px',
         p: '2em'
       }}>
 
-        <Grid container xs={6}
+        <Grid container xs={5} sm={5} md={4}
         textAlign='center'
         alignContent='center'>
           <Person sx={{fontSize: '400px', color: 'white'}}/>
@@ -148,7 +169,7 @@ export const AddEmployePage = () => {
 
 
       <Grid container 
-        xs={6}
+        xs={10} sm={10} md={7}
         sx={{color: 'white'}}
         direction='column'
         alignContent='center'
@@ -190,6 +211,14 @@ export const AddEmployePage = () => {
             onChange={formik.handleChange}
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}/>
+            <br />
+            <Typography variant='h6'>Contraseña</Typography>
+            <TextField  name="password" 
+            type='password'
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}/>
             <br />
             <Typography variant='h6'>numero celular</Typography>
             <TextField name='phonenumber' 
