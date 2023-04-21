@@ -71,14 +71,10 @@ const EditEmployePage = () => {
             birthday: values.birthday,
             email: values.email,
             phonenumber: values.phonenumber,
-            status: 'activo',
-            user: {
-              password: values.password,
-              role: 2
-            }
+            status: 'activo'
           }
           console.log(newEmployee)
-          axios.put(`http://localhost:3000/employee/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
+          axios.put(`http://localhost:3000/employee/update/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
 
         //   await axios({
         //     method:'POST',

@@ -53,7 +53,9 @@ export const EmployeePage = () => {
                             
                             <TableCell><Button color='success' variant="outlined" onClick={()=>{
                               navigate(`/employee/edit/${t.id}`)
-                            }}>Edit</Button>&nbsp; <Button color='error' variant="outlined">Deleted</Button></TableCell>
+                            }}>Edit</Button>&nbsp; <Button color='error' variant="outlined" onClick={()=>{
+                              axios.delete(`http://localhost:3000/employee/delete/${t.id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
+                            }}>Deleted</Button></TableCell>
                             
                           </TableRow>
                         ))
