@@ -7,6 +7,7 @@ import { employeeModel } from '../../assets/models/employee.model'
 import axios from 'axios'
 import * as yup from 'yup'
 import { useFormik } from 'formik'
+import Swal from 'sweetalert2'
 
 export const AddEmployePage = () => {
   
@@ -107,7 +108,7 @@ export const AddEmployePage = () => {
       }
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values,  {resetForm }) => {
       //alert(JSON.stringify(values, null, 2));
       
       createUserWithEmailAndPassword(auth, values.email, values.password).then(async(res) =>{
@@ -126,6 +127,13 @@ export const AddEmployePage = () => {
           }
         }
         newEmployee.user.uuid = res.user.uid
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Empleado Registrado Con exito',
+          showConfirmButton: false,
+          timer: 1500
+        })
         await axios({
           method:'POST',
           url:'http://localhost:3000/employee',
@@ -135,7 +143,7 @@ export const AddEmployePage = () => {
           }
         }).then(res => console.log(res.data))
         .catch(err => console.log(err))
-          
+        resetForm()
       }).catch((err) => {console.log(err)})
 
 

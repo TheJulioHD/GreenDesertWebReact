@@ -9,6 +9,7 @@ import { useFormik } from 'formik';
 import { loginModel } from '../../../assets/models/login.model';
 import { Toldbar } from '../../../Common/layout/toldbar';
 import { Color } from '../../../Theme/Colors/Color';
+import Swal from 'sweetalert2';
 
 
 
@@ -44,8 +45,15 @@ export const SignIn = () => {
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      signInWithEmailAndPassword(auth, values.email, values.password).then((res) =>{
+    onSubmit: async(values) => {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+      })
+       await signInWithEmailAndPassword(auth, values.email, values.password).then((res) =>{
         console.log(res.user.uid)
         
         navigate('/home')

@@ -4,12 +4,40 @@ import { userModel } from '../../assets/models/user.model'
 import { employeeModel } from '../../assets/models/employee.model'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
+
+let idTest : number
+
+const getId = (id : number):any  => {
+  return (
+    Swal.fire({
+      title: '¿Seguro que quieres eliminar?',
+      text: "Una vez hecha esta accion no podra revertirce",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, quiero eliminarlo'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(id)
+        Swal.fire(
+          'Eliminado',
+          'Los datos han sido eliminados',
+          'success'
+          )
+          axios.delete(`http://localhost:3000/employee/delete/${id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
+      }
+    })
+  )
+}
 
 
 
 export const EmployeePage = () => {
   const [user, setUser] = useState<userModel[]>([])
   const navigate= useNavigate()
+  
   axios({
     method:'GET',
     url:'http://localhost:3000/user/all'
@@ -54,7 +82,10 @@ export const EmployeePage = () => {
                             <TableCell><Button color='success' variant="outlined" onClick={()=>{
                               navigate(`/employee/edit/${t.id}`)
                             }}>Edit</Button>&nbsp; <Button color='error' variant="outlined" onClick={()=>{
-                              axios.delete(`http://localhost:3000/employee/delete/${t.id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
+
+                              idTest = getId(t.id);
+
+                              // axios.delete(`http://localhost:3000/employee/delete/${t.id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
                             }}>Deleted</Button></TableCell>
                             
                           </TableRow>
