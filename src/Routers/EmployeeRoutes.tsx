@@ -1,6 +1,6 @@
 import { Box, Toolbar } from '@mui/material'
 import React from 'react'
-import { Route, Router, Routes } from 'react-router-dom'
+import { Navigate, Route, Router, Routes } from 'react-router-dom'
 import { Navbar, SideBar } from '../Common/layout'
 import { AddEmployePage } from '../pages/employee/addEmployePage'
 
@@ -19,6 +19,8 @@ export const EmployeeRoutes = () => {
       
       <Routes>
         <Route path='/add' element={<AddEmployePage/>}/>
+
+        <Route path='/*' element={<Navigate to={'/add'}/>}/>
       </Routes>
   
     </Box>

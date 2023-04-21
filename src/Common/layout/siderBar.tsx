@@ -1,11 +1,11 @@
-import { Menu, MenuBook, TurnedInNot } from "@mui/icons-material"
+import { FireTruck, Google, Hail, Inventory, LocalShipping, Menu, MenuBook, Person, TurnedInNot } from "@mui/icons-material"
 import { Box, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from "@mui/material"
+import { Link } from "react-router-dom";
 
 export const SideBar = ({drawerWidth = 340}) => {
 
   let options = ['Inventario', 'Clientes', 'Empleados', 'Proveedores'];
   let descriptions = ['asd','b','c','d'];
-
 
   return (
 
@@ -42,19 +42,122 @@ export const SideBar = ({drawerWidth = 340}) => {
         <Divider/>
         <List>
             {
-              options.map( text => (
-                <ListItem key={text} disablePadding>  
+              <ListItem key={'a'} disablePadding>  
+                
+                <Grid width='100%'>
+
                   <ListItemButton>
-                    <ListItemIcon>
-                      <TurnedInNot/>
-                    </ListItemIcon>
-                    <Grid container>
-                        <ListItemText primary = {text}/>
-                        <ListItemText secondary = {'opcion'}/>
-                      </Grid>
+                    <ListItem>
+                      <Person/>
+                      <ListItemText primary = {'Empleados'}/>
+                    </ListItem>
+
+                    
                   </ListItemButton>
-                </ListItem>
-              ))
+
+                  
+                  <ListItemButton>
+                    <ListItem sx={{ml: 2}}>
+                      <Person/>
+                      <ListItemText secondary = {'Agregar empleados'}/>
+                    </ListItem>
+                    
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItem sx={{ml: 2}}>
+                      <Person/>
+                      <ListItemText secondary = {'Visualizar empleados'}/>
+                    </ListItem>
+                    
+                  </ListItemButton>
+
+
+                  <ListItemButton>
+                    <ListItem>
+                      <Hail/>
+                      <ListItemText primary = {'Clientes'}/>
+                    </ListItem>
+
+                    
+                  </ListItemButton>
+
+                  
+                  <ListItemButton>
+                    <ListItem sx={{ml: 2}}>
+                      <Hail/>
+                      <ListItemText secondary = {'Agregar empleados'}/>
+                    </ListItem>
+                    
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItem sx={{ml: 2}}>
+                      <Hail/>
+                      <ListItemText secondary = {'Visualizar empleados'}/>
+                    </ListItem>
+                    
+                  </ListItemButton>
+
+                  <ListItemButton>
+                    <ListItem>
+                      <Inventory/>
+                      <ListItemText primary = {'Inventario'}/>
+                    </ListItem>
+
+                    
+                  </ListItemButton>
+
+                  
+                  <ListItemButton>
+                    <ListItem sx={{ml: 2}}>
+                      <Inventory/>
+                      <ListItemText secondary = {'Agregar empleados'}/>
+                    </ListItem>
+                    
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItem sx={{ml: 2}}>
+                      <Inventory/>
+                      <ListItemText secondary = {'Visualizar empleados'}/>
+                    </ListItem>
+                    
+                  </ListItemButton>
+                  
+                  <ListItemButton>
+                    <ListItem>
+                      <LocalShipping/>
+                      <ListItemText primary = {'Provedores'}/>
+                    </ListItem>
+
+                    
+                  </ListItemButton>
+
+                  
+                  <ListItemButton>
+                    <ListItem sx={{ml: 2}}>
+                      <LocalShipping/>
+                      <Link to={'/employee/add'}>
+
+
+                      <ListItemText secondary = {'Agregar empleados'}/>
+
+                      </Link>
+                    </ListItem>
+                    
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItem sx={{ml: 2}}>
+                      <LocalShipping/>
+                      <ListItemText secondary = {'Visualizar empleados'}/>
+                    </ListItem>
+                    
+                  </ListItemButton>
+                    
+                </Grid>
+
+                
+
+
+              </ListItem>
             }
           </List>
       </Drawer>
