@@ -1,7 +1,7 @@
 import { Menu, MenuBook, TurnedInNot } from "@mui/icons-material"
 import { Box, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from "@mui/material"
 import { Color } from "../../Theme/Colors/Color";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const SideBar = ({drawerWidth = 340}) => {
 
@@ -63,14 +63,12 @@ export const SideBar = ({drawerWidth = 340}) => {
                   
                 </ListItem>
                 <ListItem>
-                <ListItemButton disabled onClick={()=>{
-                    navigate('/client')
-                  }}>
-                    <ListItemText>
-                    Clientes
-                    </ListItemText>
-                  </ListItemButton>
-                  
+                    <Link to={'/login'}>
+                      <ListItemText>
+                      Clientes
+                      </ListItemText>
+                    
+                    </Link>
                 </ListItem>
                 <ListItem>
                 <ListItemButton disabled onClick={()=>{

@@ -2,8 +2,8 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { userModel } from '../../../assets/models/user.model';
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
-import { Person } from '@mui/icons-material';
+import { Box, Button, Grid, IconButton, TextField, Typography } from '@mui/material';
+import { Home, Person } from '@mui/icons-material';
 import * as yup from 'yup'
 import { useFormik } from 'formik';
 import { loginModel } from '../../../assets/models/login.model';
@@ -32,6 +32,17 @@ export const SignIn = () => {
     employee:0,
   })
 
+  const splashNotification = (name : string) : void  => {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Bienvenido' + name,
+      showConfirmButton: false,
+      timer: 800
+    })
+    
+  }
+
 
   //Functions
   const validationSchema = yup.object().shape({
@@ -46,15 +57,8 @@ export const SignIn = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async(values) => {
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Your work has been saved',
-        showConfirmButton: false,
-        timer: 1500
-      })
        await signInWithEmailAndPassword(auth, values.email, values.password).then((res) =>{
-        console.log(res.user.uid)
+        splashNotification('nelson');
         
         navigate('/home')
       })
@@ -157,6 +161,7 @@ export const SignIn = () => {
                 backgroundColor: Color.Green,
               }}
             >Inicio de sesion</Button>
+
           </Grid>  
       
         </form>    
