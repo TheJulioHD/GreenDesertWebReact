@@ -1,32 +1,37 @@
 import { Box, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { SignIn } from '../Auth/SignIn/SignIn'
+import { Color } from '../../Theme/Colors/Color'
 
 export const Index = () => {
   
   
   return (
 
-    <div >
       <Grid 
       container 
       rowSpacing={1} 
       direction={'row'} 
-      columnSpacing={{xs:1, sm:2 , md:3}} 
       justifyContent={'center'}
       justifyItems='center'
       textAlign={'center'}
-      mt={25}>
+      mt={25}
+      sx={{backgroundColor: Color.GrayUltraDark, color: 'white', padding: 10}}>
       
-        <Grid item xs={10} md={5} sm={10} >
+        <Grid item 
+        mt={22}
+        xs={10} md={5} sm={10} 
+        direction='column'
+        textAlign='center'
+        alignContent='center'
+        alignItems='center'>
           <h1>
-            <Typography variant='h2'>
+            <Typography variant='h1'>
               
               ¡Bienvenido!
             </Typography>
           
           </h1>
-          <br />
           <img src="src\assets\logo.png" alt=""/>
         </Grid>
 
@@ -74,7 +79,7 @@ export const Index = () => {
             </Grid>
             <Grid item xs={10} sm={10} md={5}>
                <Typography variant='h6'>
-               info@greendesert.mx
+               correo electronico: info@greendesert.mx
                </Typography>
             </Grid>
 
@@ -88,7 +93,6 @@ export const Index = () => {
 
       </Grid>
 
-    </div>
 
 
 

@@ -7,6 +7,7 @@ import { employeeModel } from '../../assets/models/employee.model'
 import axios from 'axios'
 import * as yup from 'yup'
 import { useFormik } from 'formik'
+import { Color } from '../../Theme/Colors/Color'
 
 export const AddEmployePage = () => {
   
@@ -150,25 +151,24 @@ export const AddEmployePage = () => {
         <Typography variant='h2'>Registrar empleado</Typography>
       </Grid>
 
-      <Grid container 
+      <Grid container
       columnSpacing={{xs:1, sm:2 , md:3}}
       direction={'row'}
       sx={{
-        backgroundColor: 'primary.light',
+        backgroundColor: Color.GrayUltraDark,
         borderRadius: '5px',
         p: '2em'
       }}>
 
-        <Grid container xs={5} sm={5} md={4}
+        <Grid container xs={5} sm={4} md={2}
         textAlign='center'
         alignContent='center'>
           <Person sx={{fontSize: '400px', color: 'white'}}/>
-          <Button variant='outlined'/>
         </Grid>
 
 
       <Grid container 
-        xs={10} sm={10} md={7}
+        xs={10} sm={10}
         sx={{color: 'white'}}
         direction='column'
         alignContent='center'
@@ -177,6 +177,7 @@ export const AddEmployePage = () => {
         <form onSubmit={formik.handleSubmit}>
           <Typography variant='h6'>Nombre</Typography>
             <TextField name='name' 
+            sx={{backgroundColor: Color.GreenUltraLight, borderRadius: 2,color: Color.black}}
             value={formik.values.name}
             onChange={formik.handleChange}
             error={formik.touched.name && Boolean(formik.errors.name)}
@@ -185,6 +186,7 @@ export const AddEmployePage = () => {
 
             <Typography variant='h6'>Apellido paterno</Typography>
             <TextField  name='fristSurname' 
+            sx={{backgroundColor: Color.GreenUltraLight, borderRadius: 2,color: Color.black}}
                 value={formik.values.fristSurname}
                 onChange={formik.handleChange}
                 error={formik.touched.fristSurname && Boolean(formik.errors.fristSurname)}
@@ -192,6 +194,7 @@ export const AddEmployePage = () => {
             <br />
             <Typography variant='h6'>Apellido materno</Typography>
             <TextField name='secondSurname' 
+            sx={{backgroundColor: Color.GreenUltraLight, borderRadius: 2,color: Color.black}}
             value={formik.values.secondSurname}
             onChange={formik.handleChange}
             error={formik.touched.secondSurname && Boolean(formik.errors.secondSurname)}
@@ -199,6 +202,7 @@ export const AddEmployePage = () => {
             <br />
             <Typography variant='h6'>Fecha de nacimiento</Typography>
             <TextField  name='birthday' type='date' 
+            sx={{backgroundColor: Color.GreenUltraLight, borderRadius: 2,color: Color.black}}
             value={formik.values.birthday}
             onChange={formik.handleChange}
             error={formik.touched.birthday && Boolean(formik.errors.birthday)}
@@ -206,6 +210,7 @@ export const AddEmployePage = () => {
             <br />
             <Typography variant='h6'>Correo electronico</Typography>
             <TextField  name='email' 
+            sx={{backgroundColor: Color.GreenUltraLight, borderRadius: 2,color: Color.black}}
             value={formik.values.email}
             onChange={formik.handleChange}
             error={formik.touched.email && Boolean(formik.errors.email)}
@@ -213,6 +218,7 @@ export const AddEmployePage = () => {
             <br />
             <Typography variant='h6'>Contraseña</Typography>
             <TextField  name="password" 
+            sx={{backgroundColor: Color.GreenUltraLight, borderRadius: 2,color: Color.black}}
             type='password'
             value={formik.values.password}
             onChange={formik.handleChange}
@@ -221,6 +227,7 @@ export const AddEmployePage = () => {
             <br />
             <Typography variant='h6'>numero celular</Typography>
             <TextField name='phonenumber' 
+            sx={{backgroundColor: Color.GreenUltraLight, borderRadius: 2,color: Color.black}}
             value={formik.values.phonenumber}
             onChange={formik.handleChange}
             error={formik.touched.phonenumber && Boolean(formik.errors.phonenumber)}
@@ -228,7 +235,9 @@ export const AddEmployePage = () => {
 
             
           <Grid item>
-            <Button variant='contained' type='submit'>Registrar empleado</Button>
+            <Button 
+            sx={{mt: 5, backgroundColor: Color.GREEN}}
+            variant='contained' type='submit'>Registrar empleado</Button>
           </Grid>
         </form>
       </Grid>
