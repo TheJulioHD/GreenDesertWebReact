@@ -26,6 +26,8 @@ const Inventoriypage = () => {
                     <TableCell>a</TableCell>
                     <TableCell>a</TableCell>
                     <TableCell>a</TableCell>
+
+                    
                     <TableCell><Button color='success' variant="outlined">Edit</Button>&nbsp; <Button color='error' variant="outlined">Deleted</Button></TableCell>
                 </TableRow>
             </TableBody>

@@ -6,5 +6,5 @@ export interface userModel{
     status?:string,
     role:number,
     employee?:number,
-
+    
 }

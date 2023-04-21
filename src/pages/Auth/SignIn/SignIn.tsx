@@ -10,6 +10,8 @@ import { loginModel } from '../../../assets/models/login.model';
 import { Toldbar } from '../../../Common/layout/toldbar';
 import { Color } from '../../../Theme/Colors/Color';
 
+
+
 export const SignIn = () => {
 
   //hooks
@@ -45,6 +47,7 @@ export const SignIn = () => {
     onSubmit: (values) => {
       signInWithEmailAndPassword(auth, values.email, values.password).then((res) =>{
         console.log(res.user.uid)
+        
         navigate('/home')
       })
     },
@@ -152,7 +155,7 @@ export const SignIn = () => {
           
       </Grid>
 
-
+            
 
       </Grid>
 

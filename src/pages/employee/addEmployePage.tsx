@@ -122,7 +122,7 @@ export const AddEmployePage = () => {
           user: {
             uuid:'',
             password: values.password,
-            role: 1
+            role: 2
           }
         }
         newEmployee.user.uuid = res.user.uid
