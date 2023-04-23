@@ -45,6 +45,7 @@ export const SignIn = () => {
     onSubmit: (values) => {
       signInWithEmailAndPassword(auth, values.email, values.password).then((res) =>{
         console.log(res.user.uid)
+        
         navigate('/home')
       })
     },

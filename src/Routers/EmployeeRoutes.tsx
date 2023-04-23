@@ -3,6 +3,7 @@ import React from 'react'
 import { Navigate, Route, Router, Routes } from 'react-router-dom'
 import { Navbar, SideBar } from '../Common/layout'
 import { AddEmployePage } from '../pages/employee/addEmployePage'
+import { EmployeePage } from '../pages/employee/employeePage'
 
 export const EmployeeRoutes = () => {
   return (
@@ -17,12 +18,13 @@ export const EmployeeRoutes = () => {
       
       <Toolbar/>
       
-      <Routes>
-        <Route path='/add' element={<AddEmployePage/>}/>
+        <Routes>
+          <Route path='/home' element={<EmployeePage/>}/>
+          <Route path='/add' element={<AddEmployePage/>}/>
 
-        <Route path='/*' element={<Navigate to={'/add'}/>}/>
-      </Routes>
-  
+          <Route path='/*' element={<Navigate to={'/employee/home'}/>}/>
+        </Routes>
+      
     </Box>
     
   </Box>
