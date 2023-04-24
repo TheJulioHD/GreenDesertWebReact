@@ -1,4 +1,4 @@
-import { Button, Grid, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Modal, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import { useFormik } from 'formik'
 import React, {  useState } from 'react'
@@ -27,9 +27,25 @@ const EditEmployePage = () => {
     axios({
         method:'GET',
         url:`http://localhost:3000/employee/${params.id}`
-    }).then((res) =>{console.log(res.data)
+    }).then((res) =>{console.log("x" + res.data)
         setEmployee(res.data)
     }).catch((err) =>{console.log(err)})
+
+    const style = {
+      position: 'absolute' as 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: 400,
+      bgcolor: 'background.paper',
+      border: '2px solid #000',
+      boxShadow: 24,
+      p: 4,
+    };
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
 
     const validationSchema = yup.object().shape({
@@ -74,17 +90,17 @@ const EditEmployePage = () => {
             status: 'activo'
           }
           console.log(newEmployee)
-          axios.put(`http://localhost:3000/employee/update/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
+          //axios.put(`http://localhost:3000/employee/update/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
 
-        //   await axios({
-        //     method:'POST',
-        //     url:'http://localhost:3000/employee',
-        //     data:JSON.stringify(newEmployee),
-        //     headers:{
-        //       'Content-Type':'application/json'
-        //     }
-        //   }).then(res => console.log(res.data))
-        //   .catch(err => console.log(err))
+           await axios({
+             method:'PUT',
+             url:`http://localhost:3000/employee/update/${params.id}`,
+             data:JSON.stringify(newEmployee),
+             headers:{
+               'Content-Type':'application/json'
+             }
+           }).then(res => console.log(res.data))
+           .catch(err => console.log(err))
             
     }
 })
@@ -121,63 +137,76 @@ const EditEmployePage = () => {
         alignContent='center'
         textAlign='center'>
 
-        <form onSubmit={formik.handleSubmit}>
-          <Typography variant='h6'>Nombre</Typography>
-            <TextField name='name' 
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name} />
-            <br />
+        
+        <Button onClick={handleOpen}>Actualizar empleado</Button>
+            <>
+              <Modal
+                  open={open}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <Button onClick={handleClose}>X</Button>
+                    <form onSubmit={formik.handleSubmit}>
+                      <Typography variant='h6'>Nombre</Typography>
+                        <TextField name='name' 
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        error={formik.touched.name && Boolean(formik.errors.name)}
+                        helperText={formik.touched.name && formik.errors.name} />
+                        <br />
 
-            <Typography variant='h6'>Apellido paterno</Typography>
-            <TextField  name='fristSurname' 
-                value={formik.values.fristSurname}
-                onChange={formik.handleChange}
-                error={formik.touched.fristSurname && Boolean(formik.errors.fristSurname)}
-                helperText={formik.touched.fristSurname && formik.errors.fristSurname}/>
-            <br />
-            <Typography variant='h6'>Apellido materno</Typography>
-            <TextField name='secondSurname' 
-            value={formik.values.secondSurname}
-            onChange={formik.handleChange}
-            error={formik.touched.secondSurname && Boolean(formik.errors.secondSurname)}
-            helperText={formik.touched.secondSurname && formik.errors.secondSurname}/>
-            <br />
-            <Typography variant='h6'>Fecha de nacimiento</Typography>
-            <TextField  name='birthday' type='date' 
-            value={formik.values.birthday}
-            onChange={formik.handleChange}
-            error={formik.touched.birthday && Boolean(formik.errors.birthday)}
-            helperText={formik.touched.birthday && formik.errors.birthday}/>
-            <br />
-            <Typography variant='h6'>Correo electronico</Typography>
-            <TextField  name='email' 
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}/>
-            <br />
-            <Typography variant='h6'>Contraseña</Typography>
-            <TextField  name="password" 
-            type='password'
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}/>
-            <br />
-            <Typography variant='h6'>numero celular</Typography>
-            <TextField name='phonenumber' 
-            value={formik.values.phonenumber}
-            onChange={formik.handleChange}
-            error={formik.touched.phonenumber && Boolean(formik.errors.phonenumber)}
-            helperText={formik.touched.phonenumber && formik.errors.phonenumber}/>
+                        <Typography variant='h6'>Apellido paterno</Typography>
+                        <TextField  name='fristSurname' 
+                            value={formik.values.fristSurname}
+                            onChange={formik.handleChange}
+                            error={formik.touched.fristSurname && Boolean(formik.errors.fristSurname)}
+                            helperText={formik.touched.fristSurname && formik.errors.fristSurname}/>
+                        <br />
+                        <Typography variant='h6'>Apellido materno</Typography>
+                        <TextField name='secondSurname' 
+                        value={formik.values.secondSurname}
+                        onChange={formik.handleChange}
+                        error={formik.touched.secondSurname && Boolean(formik.errors.secondSurname)}
+                        helperText={formik.touched.secondSurname && formik.errors.secondSurname}/>
+                        <br />
+                        <Typography variant='h6'>Fecha de nacimiento</Typography>
+                        <TextField  name='birthday' type='date' 
+                        value={formik.values.birthday}
+                        onChange={formik.handleChange}
+                        error={formik.touched.birthday && Boolean(formik.errors.birthday)}
+                        helperText={formik.touched.birthday && formik.errors.birthday}/>
+                        <br />
+                        <Typography variant='h6'>Correo electronico</Typography>
+                        <TextField  name='email' 
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        error={formik.touched.email && Boolean(formik.errors.email)}
+                        helperText={formik.touched.email && formik.errors.email}/>
+                        <br />
+                        <Typography variant='h6'>Contraseña</Typography>
+                        <TextField  name="password" 
+                        type='password'
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        error={formik.touched.password && Boolean(formik.errors.password)}
+                        helperText={formik.touched.password && formik.errors.password}/>
+                        <br />
+                        <Typography variant='h6'>numero celular</Typography>
+                        <TextField name='phonenumber' 
+                        value={formik.values.phonenumber}
+                        onChange={formik.handleChange}
+                        error={formik.touched.phonenumber && Boolean(formik.errors.phonenumber)}
+                        helperText={formik.touched.phonenumber && formik.errors.phonenumber}/>
 
-            
-          <Grid item>
-            <Button variant='contained' type='submit'>Actualizar empleado</Button>
-          </Grid>
-        </form>
+                        
+                      <Grid item>
+                        <Button variant='contained' type='submit'>Registrar empleado</Button>
+                      </Grid>
+                    </form>
+                  </Box>
+                </Modal>
+              </>
       </Grid>
       
       </Grid>
