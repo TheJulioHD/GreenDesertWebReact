@@ -7,7 +7,7 @@ import { employeeModel } from '../../assets/models/employee.model'
 import * as yup from 'yup'
 import { Person } from '@mui/icons-material'
 
-const EditEmployePage = () => {
+export const EditEmployePage = () => {
   const params = useParams()
   const [employee, setEmployee] = useState<employeeModel>({
     name: '',
@@ -129,7 +129,7 @@ const EditEmployePage = () => {
       </Grid>
 
       <Grid container
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        columnSpacing={{ xs: 1, sm: 2}}
         direction={'row'}
         sx={{
           backgroundColor: 'primary.light',
@@ -137,7 +137,7 @@ const EditEmployePage = () => {
           p: '2em'
         }}>
 
-        <Grid container xs={5} sm={5} md={4}
+        <Grid container xs={5} sm={5} 
           textAlign='center'
           alignContent='center'>
           <Person sx={{ fontSize: '400px', color: 'white' }} />
@@ -146,7 +146,7 @@ const EditEmployePage = () => {
 
 
         <Grid container
-          xs={10} sm={10} md={7}
+          xs={10} sm={10} 
           sx={{ color: 'white' }}
           direction='column'
           alignContent='center'
@@ -229,4 +229,3 @@ const EditEmployePage = () => {
   )
 }
 
-export default EditEmployePage
