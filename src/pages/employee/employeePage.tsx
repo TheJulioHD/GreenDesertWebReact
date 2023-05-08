@@ -64,7 +64,7 @@ export const EmployeePage = () => {
         await setEmployee(res.data)
         console.log(employee)
         setIdv(idv2)
-        await{handleOpen}
+        
   
       }).catch((err) => { console.log(err) })
   

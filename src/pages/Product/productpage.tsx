@@ -9,7 +9,6 @@ import { userModel } from '../../assets/models/user.model'
 import * as yup from 'yup'
 import { IProvider } from '../../assets/models/provider.model'
 import { IProduct } from '../../assets/models/product.model'
-import { IInventory } from '../../assets/models/inventory.model'
 
 
 let idTest: number
@@ -37,13 +36,13 @@ const getId = (id: number): any => {
                     'Los datos han sido eliminados',
                     'success'
                 )
-                axios.delete(`http://localhost:3000/inventory/delete/${id}`).then((res) => { console.log(res) }).catch((err) => { console.log(err) })
+                axios.delete(`http://localhost:3000/product/delete/${id}`).then((res) => { console.log(res) }).catch((err) => { console.log(err) })
             }
         })
     )
 }
-const Inventoriypage = () => {
-    const [user, setUser] = useState<IInventory[]>([])
+const Productpage = () => {
+    const [user, setUser] = useState<IProvider[]>([])
     const navigate = useNavigate()
     const [idv, setIdv] = useState({
         id: 0
@@ -53,14 +52,14 @@ const Inventoriypage = () => {
 
             await axios({
                 method: 'GET',
-                url: `http://localhost:3000/inventory/${idv2}`
+                url: `http://localhost:3000/product/${idv2}`
             }).then(async (res) => {
                 console.log("x" + res)
 
-                await setInventory(res.data)
-                console.log(inventory)
+                await setproduct(res.data)
+                console.log(product)
                 setIdv(idv2)
-                
+
 
             }).catch((err) => { console.log(err) })
 
@@ -68,13 +67,17 @@ const Inventoriypage = () => {
         )
     }
     // edit
-    const [inventory, setInventory] = useState<IInventory>({
-        
+    const [product, setproduct] = useState<IProduct>({
 
-                quantity: 0,
-                spot: '',
-            
-        
+        name: '',
+        description: '',
+        brand: '',
+        image: '',
+        inventory: {
+            quantity: 0,
+            spot: '',
+        }
+
     })
     useEffect(() => {
 
@@ -101,59 +104,62 @@ const Inventoriypage = () => {
         boxShadow: 24,
         p: 4,
     };
-    const [idprovedor, setIdProvedor]=useState();
- 
+
     const [open2, setOpen2] = useState(false);
-   
+
 
     const handleOpen2 = async () => {
 
         await setOpen2(true)
-       
-        formik2.values.quantity = inventory.quantity
-        formik2.values.spot = inventory.spot
-        // formik.values.address = provider.address
-        // formik.values.email = provider.email
-        // formik.values.phonenumber = provider.phonenumber
+
+        formik2.values.name = product.name;
+        formik2.values.description = product.description;
+        formik2.values.brand = product.brand;
+
     };
- 
+
     const handleClose2 = () => setOpen2(false);
 
 
 
-   
 
     const validationSchema2 = yup.object().shape({
-        quantity: yup.number().required('La cantidad del producto es requerida').min(1, 'el minimo tiene que ser 1'),
-        spot: yup.string().trim().required('La descripcion es requerida'),
-        
-       
+        name: yup.string().trim().required('Nombre del producto es requerido'),
+        description: yup.string().trim().required('La descripcion es requerida'),
+        brand: yup.string().trim().required('La brand es requerida'),
+
     });
 
-    const formik2 = useFormik<IInventory>({
+    const formik2 = useFormik<IProduct>({
         initialValues: {
-            
+            name: '',
+            description: '',
+            brand: '',
+            image: '',
+            inventory: {
                 quantity: 0,
                 spot: '',
-            
+            }
 
         },
         validationSchema: validationSchema2,
         onSubmit: async (values, { resetForm }) => {
             //alert(JSON.stringify(values, null, 2));
 
-            const newInventory = {
-                    quantity: values.quantity,
-                    spot: values.spot,
+            const newProduct = {
+                name: values.name,
+                description: values.description,
+                brand: values.brand,
+                image: values.image
                 
             }
-            console.log(newInventory)
+            console.log(newProduct)
             //axios.put(`http://localhost:3000/employee/update/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
 
             await axios({
                 method: 'PUT',
-                url: `http://localhost:3000/inventory/update/${idv}`,
-                data: JSON.stringify(newInventory),
+                url: `http://localhost:3000/product/update/${idv}`,
+                data: JSON.stringify(newProduct),
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -171,12 +177,12 @@ const Inventoriypage = () => {
                 .catch(err => console.log(err))
         }
     })
-    
+
     // end edit
     useEffect(() => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3000/inventory/all'
+            url: 'http://localhost:3000/product/all'
         }).then((res) => {
             console.log(res.data)
             setUser(res.data)
@@ -184,17 +190,19 @@ const Inventoriypage = () => {
     }, [])
     return (
         <div>
-            <Typography variant='h3' textAlign={'center'}>Inventario Registrados</Typography>
+            <Typography variant='h3' textAlign={'center'}>Productos Registrados</Typography>
             <br />
-            
-            <TableContainer  sx={{textAlign:'justify'}}>
+
+            <TableContainer sx={{ textAlign: 'justify' }}>
                 <TableHead >
                     <TableRow>
                         <TableCell>#</TableCell>
-                        <TableCell>Cantida</TableCell>
-                        <TableCell>Spot</TableCell>
-                        <TableCell>Nombre del producto</TableCell>
-                       
+                        <TableCell>Nombre</TableCell>
+                        <TableCell>Descripcion</TableCell>
+                        <TableCell>Brand</TableCell>
+                        <TableCell>imagen</TableCell>
+                        <TableCell>proveedor</TableCell>
+
                         <TableCell>Editar</TableCell>
                     </TableRow>
 
@@ -205,9 +213,11 @@ const Inventoriypage = () => {
                         user.map((t: any) => (
                             <TableRow key={t.id}>
                                 <TableCell key={t.id}>{t.id}</TableCell>
-                                <TableCell>{t.quantity}</TableCell>
-                                <TableCell>{t.spot}</TableCell>
-                                <TableCell>{t.product.name}</TableCell>
+                                <TableCell>{t.name}</TableCell>
+                                <TableCell>{t.description}</TableCell>
+                                <TableCell>{t.brand}</TableCell>
+                                <TableCell>{t.image}</TableCell>
+                                <TableCell>{t.provider.name}</TableCell>
                                 <TableCell>
                                     <Button color='success' variant='outlined' onClick={async () => {
                                         await getIdv5(t.id).then(async (res) => {
@@ -225,7 +235,7 @@ const Inventoriypage = () => {
 
                                         // axios.delete(`http://localhost:3000/employee/delete/${t.id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
                                     }}>Deleted</Button>  &nbsp;
-                                    
+
                                 </TableCell>
                             </TableRow>
                         ))
@@ -233,8 +243,6 @@ const Inventoriypage = () => {
 
                 </TableBody>
             </TableContainer>
-
-            
 
             <>
                 <Modal
@@ -245,26 +253,39 @@ const Inventoriypage = () => {
                     <Box sx={style}>
                         <Button onClick={handleClose2}>X</Button>
                         <form onSubmit={formik2.handleSubmit}>
-                            <br />
-                            <Typography variant='h6'>cantidad</Typography>
-                            <TextField name='quantity'
-                                value={formik2.values.quantity}
+                            <Typography variant='h6'>Nombre</Typography>
+                            <TextField name='name'
+                                value={formik2.values.name}
                                 onChange={formik2.handleChange}
-                                error={formik2.touched.quantity && Boolean(formik2.errors.quantity)}
-                                helperText={formik2.touched.quantity && formik2.errors.quantity} />
+                                error={formik2.touched.name && Boolean(formik2.errors.name)}
+                                helperText={formik2.touched.name && formik2.errors.name} />
                             <br />
 
-                            <Typography variant='h6'>spot</Typography>
-                            <TextField name='spot'
-                                value={formik2.values.spot}
+                            <Typography variant='h6'>descripcion</Typography>
+                            <TextField name='description'
+                                value={formik2.values.description}
                                 onChange={formik2.handleChange}
-                                error={formik2.touched.spot && Boolean(formik2.errors.spot)}
-                                helperText={formik2.touched.spot && formik2.errors.spot} />
+                                error={formik2.touched.description && Boolean(formik2.errors.description)}
+                                helperText={formik2.touched.description && formik2.errors.description} />
+                            <br />
+                            <Typography variant='h6'>brand</Typography>
+                            <TextField name='brand'
+                                value={formik2.values.brand}
+                                onChange={formik2.handleChange}
+                                error={formik2.touched.brand && Boolean(formik2.errors.brand)}
+                                helperText={formik2.touched.brand && formik2.errors.brand} />
+                            <br />
+                            <Typography variant='h6'>imagen</Typography>
+                            <TextField name='image' type='file'
+                                value={formik2.values.image}
+                                onChange={formik2.handleChange}
+                                error={formik2.touched.image && Boolean(formik2.errors.image)}
+                                helperText={formik2.touched.image && formik2.errors.image} />
                             <br />
 
 
                             <Grid item>
-                                <Button variant='contained' type='submit'>Actualizar Inventario</Button>
+                                <Button variant='contained' type='submit'>Actualizar producto</Button>
                             </Grid>
                         </form>
                     </Box>
@@ -274,4 +295,4 @@ const Inventoriypage = () => {
     )
 }
 
-export default Inventoriypage
+export default Productpage

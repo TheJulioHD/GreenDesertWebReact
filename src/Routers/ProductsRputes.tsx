@@ -5,11 +5,11 @@ import { Navbar, SideBar } from '../Common/layout'
 import { AddEmployePage } from '../pages/employee/addEmployePage'
 import Addinvetorypage from '../pages/Inventory/addinvetorypage'
 
-import Inventoriypage from '../pages/Inventory/Inventoriypage'
 import Proveedorespage from '../pages/Proveedores/proveedorespage'
 import { AddProveedorespage } from '../pages/Proveedores/addproveedorespage'
+import Productpage from '../pages/Product/productpage'
 
-export const ProveedoresRoutes = () => {
+export const ProductRoutes = () => {
   return (
     
 
@@ -22,8 +22,7 @@ export const ProveedoresRoutes = () => {
       <Toolbar/>
       
       <Routes>
-      <Route path='/add' element={<AddProveedorespage/>}/>
-      <Route path='/' element={<Proveedorespage/>}/>
+      <Route path='/' element={<Productpage/>}/>
     </Routes>
   
 
