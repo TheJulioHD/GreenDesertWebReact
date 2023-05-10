@@ -99,7 +99,7 @@ export const AddEmployePage = () => {
       birthday: '',
       email: '',
       phonenumber: '',
-      status: '',
+      status: true,
       password:'',
       user: {
         uuid:'',
@@ -119,7 +119,7 @@ export const AddEmployePage = () => {
           birthday: values.birthday,
           email: values.email,
           phonenumber: values.phonenumber,
-          status: 'activo',
+          status: true,
           user: {
             uuid:'',
             password: values.password,

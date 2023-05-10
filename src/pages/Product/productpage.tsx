@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Modal, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
+import { Box, Button, Grid, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
@@ -194,6 +194,7 @@ const Productpage = () => {
             <br />
 
             <TableContainer sx={{ textAlign: 'justify' }}>
+                <Table>
                 <TableHead >
                     <TableRow>
                         <TableCell>#</TableCell>
@@ -210,9 +211,9 @@ const Productpage = () => {
                 <TableBody>
 
                     {
-                        user.map((t: any) => (
+                        user.map((t: any, index) => (
                             <TableRow key={t.id}>
-                                <TableCell key={t.id}>{t.id}</TableCell>
+                                <TableCell key={t.id}>{index+1}</TableCell>
                                 <TableCell>{t.name}</TableCell>
                                 <TableCell>{t.description}</TableCell>
                                 <TableCell>{t.brand}</TableCell>
@@ -242,6 +243,7 @@ const Productpage = () => {
                     }
 
                 </TableBody>
+                </Table>
             </TableContainer>
 
             <>

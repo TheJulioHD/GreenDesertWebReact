@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Modal, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
+import { Box, Button, Grid, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { userModel } from '../../assets/models/user.model'
 import axios from 'axios'
@@ -78,7 +78,7 @@ export const EmployeePage = () => {
     birthday: '',
     email: '',
     phonenumber: '',
-    status: '',
+    status: true,
     password: '',
     user: {
       uuid: '',
@@ -147,7 +147,7 @@ export const EmployeePage = () => {
       birthday: '',
       email: '',
       phonenumber: '',
-      status: '',
+      status: true,
       password: '',
       user: {
         uuid: '',
@@ -167,7 +167,7 @@ export const EmployeePage = () => {
         birthday: values.birthday,
         email: values.email,
         phonenumber: values.phonenumber,
-        status: 'activo'
+        status: true
       }
       console.log(newEmployee)
       //axios.put(`http://localhost:3000/employee/update/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
@@ -203,8 +203,11 @@ export const EmployeePage = () => {
    },[])
   return (
     <>
+  <Typography variant='h3' textAlign={'center'}> Empleados Registrados</Typography>
+  <br />
       <Grid container columnSpacing={{xs:1, sm:2 , md:3}}>
          <TableContainer>
+            <Table>
             <TableHead> 
                 <TableRow>
                     <TableCell>#</TableCell>
@@ -223,9 +226,9 @@ export const EmployeePage = () => {
             <TableBody>
 
             {
-                        user.map((t:any) =>(
+                        user.map((t:any, index) =>(
                           <TableRow key={t.id}>
-                             <TableCell key={t.id}>{t.id}</TableCell>
+                             <TableCell key={t.id}>{index +1}</TableCell>
                             <TableCell >{t.email}</TableCell>
                             <TableCell >{t.status}</TableCell>
                             <TableCell >{t.role.name}</TableCell>
@@ -260,6 +263,7 @@ export const EmployeePage = () => {
                       
                 </TableRow>
             </TableBody>
+            </Table>
         </TableContainer>
       </Grid>
 

@@ -4,7 +4,8 @@ import { AddEmployePage } from "../employee/addEmployePage"
 export const HomePage = () => {
   return (
 
-    <AddEmployePage/>
+    <>
+    hola</>
     
   )
 }

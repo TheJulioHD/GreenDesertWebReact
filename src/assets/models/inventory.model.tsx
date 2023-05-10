@@ -1,3 +1,5 @@
+import { IProduct } from "./product.model";
+
 export interface IInventory{
     
     quantity: number;
@@ -7,6 +9,8 @@ export interface IInventory{
 
     
     product?: number;
+
+    porduct2?: IProduct
 
     //order: number;
     

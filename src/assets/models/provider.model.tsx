@@ -17,7 +17,7 @@ export interface IProvider{
     phonenumber: string;
     
    
-    status: string;
+    status: boolean;
 
     //porduct
     nameproduct: string;

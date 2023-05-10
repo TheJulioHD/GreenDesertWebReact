@@ -9,7 +9,7 @@ export interface employeeModel{
       birthday:string,
       email:string,
       phonenumber:string,
-      status?:string,
+      status?:boolean,
       password:string,
       user: userModel,
 }

@@ -27,7 +27,7 @@ export const SignIn = () => {
     uuid:'',
     email:'',
     password:'',
-    status:'',
+    status:true,
     role:0,
     employee:0,
   })

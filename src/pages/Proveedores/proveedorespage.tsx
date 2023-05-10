@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Modal, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
+import { Box, Button, Grid, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
@@ -73,7 +73,7 @@ const Proveedorespage = () => {
         address: '',
         email: '',
         phonenumber: '',
-        status: '',
+        status: true,
         //porduct
         nameproduct: '',
         description: '',
@@ -222,7 +222,7 @@ const Proveedorespage = () => {
             address: '',
             email: '',
             phonenumber: '',
-            status: '',
+            status: true,
             //porduct
             nameproduct: '',
             description: '',
@@ -254,7 +254,7 @@ const Proveedorespage = () => {
                 address: values.address,
                 email: values.email,
                 phonenumber: values.phonenumber,
-                status: 'activo',
+                status: true,
                 //end
                 product: {
                     name: values.nameproduct,
@@ -307,6 +307,7 @@ const Proveedorespage = () => {
             <br />
             
             <TableContainer  sx={{textAlign:'justify'}}>
+                <Table>
                 <TableHead >
                     <TableRow>
                         <TableCell>#</TableCell>
@@ -322,18 +323,18 @@ const Proveedorespage = () => {
 
                 </TableHead>
                 <TableBody>
-
+                    
                     {
-                        user.map((t: any) => (
+                        user.map((t: any, index) => (
                             <TableRow key={t.id}>
-                                <TableCell key={t.id}>{t.id}</TableCell>
+                                <TableCell key={t.id}>{index +1}</TableCell>
                                 <TableCell>{t.name}</TableCell>
                                 <TableCell>{t.company}</TableCell>
                                 <TableCell>{t.address}</TableCell>
                                 <TableCell>{t.email}</TableCell>
                                 <TableCell>{t.phonenumber}</TableCell>
-                                <TableCell>{t.status}</TableCell>
-                                <TableCell>{t.product.name}</TableCell>
+                                <TableCell>{`${t.status}`}</TableCell>
+                                <TableCell>{JSON.stringify(`${t.product.name}`)}</TableCell>
                                 <TableCell>
                                     <Button color='success' variant='outlined' onClick={async () => {
                                         await getIdv5(t.id).then(async (res) => {
@@ -365,6 +366,7 @@ const Proveedorespage = () => {
                     }
 
                 </TableBody>
+                </Table>
             </TableContainer>
 
             <>

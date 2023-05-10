@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Modal, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
+import { Box, Button, Grid, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
@@ -10,14 +10,39 @@ import * as yup from 'yup'
 import { IProvider } from '../../assets/models/provider.model'
 import { IProduct } from '../../assets/models/product.model'
 import { IInventory } from '../../assets/models/inventory.model'
+import { uuid } from '../../services/auth/AuthRouter'
+import MUIDataTable from "mui-datatables";
 
 
 let idTest: number
 let idt: number
 
 let idTest2: number
+debugger
+let uid = uuid
+
+// 
+const columns = [
+    {
+        name: "id",
+        label: "ID"
+    },
+    {
+        name: "quantity",
+        label: "cantidad"
+    },
+    {
+        name: "spot",
+        label: "spot"
+    },
+    {
+        name: "product2.name",
+        label: "nombre del producto"
+    }
+]
 
 
+//
 
 const getId = (id: number): any => {
     return (
@@ -180,14 +205,28 @@ const Inventoriypage = () => {
         }).then((res) => {
             console.log(res.data)
             setUser(res.data)
+            console.log(JSON.stringify(uid))
+            axios({
+                method: 'GET',
+                url: `http://localhost:3000/user/one${uid}`
+            }).then((res)=>{
+                console.log(res.data)
+            })
         })
     }, [])
+
+    const [id, setId] = useState({})
+const handelid=()=>{
+    setId(uid)
+    console.log(id)
+}
     return (
         <div>
             <Typography variant='h3' textAlign={'center'}>Inventario Registrados</Typography>
             <br />
             
             <TableContainer  sx={{textAlign:'justify'}}>
+                <Table>
                 <TableHead >
                     <TableRow>
                         <TableCell>#</TableCell>
@@ -202,9 +241,9 @@ const Inventoriypage = () => {
                 <TableBody>
 
                     {
-                        user.map((t: any) => (
+                        user.map((t: any, index) => (
                             <TableRow key={t.id}>
-                                <TableCell key={t.id}>{t.id}</TableCell>
+                                <TableCell key={t.id}>{index}</TableCell>
                                 <TableCell>{t.quantity}</TableCell>
                                 <TableCell>{t.spot}</TableCell>
                                 <TableCell>{t.product.name}</TableCell>
@@ -232,9 +271,11 @@ const Inventoriypage = () => {
                     }
 
                 </TableBody>
+                </Table>
             </TableContainer>
 
-            
+           
+
 
             <>
                 <Modal

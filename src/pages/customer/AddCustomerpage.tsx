@@ -9,8 +9,9 @@ import * as yup from 'yup'
 import { useFormik } from 'formik'
 import Swal from 'sweetalert2'
 import { IProvider } from '../../assets/models/provider.model'
+import { customerModel } from '../../assets/models/customer.model'
 
-export const AddProveedorespage = () => {
+export const AddCustomerpage = () => {
   
   const auth= getAuth();
   const navigate = useNavigate()
@@ -83,96 +84,48 @@ export const AddProveedorespage = () => {
 
   const validationSchema = yup.object().shape({
       name: yup.string().trim().required('El nombre es requerido'),
-      company: yup.string().trim().required('La compañia paterno es requerido'),
-      address: yup.string().trim().required('La direccion materno es requerido'),
+      fristSurname: yup.string().trim().required('La compañia paterno es requerido'),
+      secondSurname: yup.string().trim().required('La direccion materno es requerido'),
       email: yup.string().trim().required('El email tiene que ser requerido').email('ingresa un email valido'),
       phonenumber: yup.string().trim().required('El telefono tiene que ser requerido').min(10,'tiene que ser un minimo de 10 nuemros').max(10, 'tiene que tener un maximo de 10 numeros'),
-      nameproduct: yup.string().trim().required('Nombre del producto es requerido'),
-      description: yup.string().trim().required('La descripcion es requerida'),
-      brand: yup.string().trim().required('La brand es requerida'),
-      quantity: yup.string().trim().required('La cantidad tiene que ser requerida').min(1,'tiene que ser un minimo de 1 nuemros'),
-      
   });
 
-  const formik = useFormik<IProvider>({
+  const formik = useFormik<customerModel>({
     initialValues: {
-        name: '',
-        company: '',
-        address: '',
-        email: '',
-        phonenumber: '',
-        status: true,
-        //porduct
-        nameproduct: '',
-        description: '',
-        brand: '',
-        image: '',
-        //end 
-        //inventory
-        quantity: 0,
-        spot: '',
-        //end
-        product: {
-            name: '',
-            description: '',
-            brand: '',
-            image: '',
-            inventory: {
-                quantity: 0,
-                spot: '',
-            }
-        }
+      name:'',
+      fristSurname:'',
+      secondSurname:'',
+      email:'',
+      phonenumber:'',
+      status:true
     },
     validationSchema: validationSchema,
     onSubmit: async (values,  {resetForm }) => {
       //alert(JSON.stringify(values, null, 2));
-      const newProvider ={
+      const newCustomer ={
         name: values.name,
-        company: values.company,
-        address: values.address,
+        fristSurname: values.fristSurname,
+        secondSurname: values.secondSurname,
         email: values.email,
         phonenumber: values.phonenumber,
         status: true,
         //end
-        product: {
-            name: values.nameproduct,
-            description: values.description,
-            brand: values.brand,
-            image: values.image,
-            inventory: {
-                quantity: values.quantity,
-                spot: values.spot,
-            }
-        }
       }
       
-      console.log(newProvider)
+      console.log(newCustomer)
       await axios({
         method:'POST',
-        url:'http://localhost:3000/provider',
-        data:JSON.stringify(newProvider),
+        url:'http://localhost:3000/customer',
+        data:JSON.stringify(newCustomer),
         headers:{
           'Content-Type':'application/json'
         }
       }).then(res => {console.log(JSON.stringify(res.data.id))
-        const newimg={
-          image: newProvider.product.image,
-          id: res.data.id
-        }
-        axios({
-          method:'POST',
-          url:`http://localhost:3000/product/upload${JSON.stringify(res.data.id)}`,
-          data:JSON.stringify(newimg),
-          headers:{
-            'Content-Type':'application/json'
-          }
-        }).then((res)=>{
-          console.log(res.data)
-        }).then((err) =>{console.log(err)})
+        
         Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'proveedpr Registrado Con exito',
+            title: 'Customer Registrado Con exito',
             showConfirmButton: false,
             timer: 1500
           })
@@ -189,7 +142,7 @@ export const AddProveedorespage = () => {
       <Grid container
       direction={'column'}
       alignItems='center'>
-        <Typography variant='h2'>Registrar proveedor</Typography>
+        <Typography variant='h2'>Registrar Customer</Typography>
       </Grid>
 
       <Grid container 
@@ -225,19 +178,19 @@ export const AddProveedorespage = () => {
             helperText={formik.touched.name && formik.errors.name} />
             <br />
 
-            <Typography variant='h6'>Compañia</Typography>
-            <TextField  name='company' 
-                value={formik.values.company}
+            <Typography variant='h6'>Apellido paterno</Typography>
+            <TextField  name='fristSurname' 
+                value={formik.values.fristSurname}
                 onChange={formik.handleChange}
-                error={formik.touched.company && Boolean(formik.errors.company)}
-                helperText={formik.touched.company && formik.errors.company}/>
+                error={formik.touched.fristSurname && Boolean(formik.errors.fristSurname)}
+                helperText={formik.touched.fristSurname && formik.errors.fristSurname}/>
             <br />
-            <Typography variant='h6'>Direccion</Typography>
-            <TextField name='address' 
-            value={formik.values.address}
+            <Typography variant='h6'>Apellido Materno</Typography>
+            <TextField name='secondSurname' 
+            value={formik.values.secondSurname}
             onChange={formik.handleChange}
-            error={formik.touched.address && Boolean(formik.errors.address)}
-            helperText={formik.touched.address && formik.errors.address}/>
+            error={formik.touched.secondSurname && Boolean(formik.errors.secondSurname)}
+            helperText={formik.touched.secondSurname && formik.errors.secondSurname}/>
             <br />
             <Typography variant='h6'>Correo electronico</Typography>
             <TextField  name='email' 
@@ -253,53 +206,9 @@ export const AddProveedorespage = () => {
             error={formik.touched.phonenumber && Boolean(formik.errors.phonenumber)}
             helperText={formik.touched.phonenumber && formik.errors.phonenumber}/>
             <br />
-            <Typography variant='h6'>Nombre del producto</Typography>
-            <TextField  name='nameproduct' 
-            value={formik.values.nameproduct}
-            onChange={formik.handleChange}
-            error={formik.touched.nameproduct && Boolean(formik.errors.nameproduct)}
-            helperText={formik.touched.nameproduct && formik.errors.nameproduct}/>
-            <br />
-            <Typography variant='h6'>descripcion del producto</Typography>
-            <TextField  name="description" 
-            value={formik.values.description}
-            onChange={formik.handleChange}
-            error={formik.touched.description && Boolean(formik.errors.description)}
-            helperText={formik.touched.description && formik.errors.description}/>
-            <br />
-            <Typography variant='h6'>brand</Typography>
-            <TextField  name="brand" 
-            value={formik.values.brand}
-            onChange={formik.handleChange}
-            error={formik.touched.brand && Boolean(formik.errors.brand)}
-            helperText={formik.touched.brand && formik.errors.brand}/>
-            <br />
-            <Typography variant='h6'>imagen</Typography>
-            <TextField  name="image" type='file'
-            value={formik.values.image}
-            onChange={formik.handleChange}
-            error={formik.touched.image && Boolean(formik.errors.image)}
-            helperText={formik.touched.image && formik.errors.image}/>
-            <br />
-            <Typography variant='h6'>cantidad</Typography>
-            <TextField  name="quantity" 
-            value={formik.values.quantity}
-            onChange={formik.handleChange}
-            error={formik.touched.quantity && Boolean(formik.errors.quantity)}
-            helperText={formik.touched.quantity && formik.errors.quantity}/>
-            <br />
-            <Typography variant='h6'>spot</Typography>
-            <TextField  name="spot" 
-            value={formik.values.spot}
-            onChange={formik.handleChange}
-            error={formik.touched.spot && Boolean(formik.errors.spot)}
-            helperText={formik.touched.spot && formik.errors.spot}/>
-            <br />
-           
-
             
           <Grid item>
-            <Button variant='contained' type='submit'>Registrar proveedor</Button>
+            <Button variant='contained' type='submit'>Registrar customer</Button>
           </Grid>
         </form>
       </Grid>
