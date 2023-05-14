@@ -14,6 +14,7 @@ export const SideBar = ({ drawerWidth = 340 }) => {
 
   }
 
+  
 
   return (
 
@@ -169,6 +170,34 @@ export const SideBar = ({ drawerWidth = 340 }) => {
 
                     <Category />
                     <ListItemText secondary={'Visualizar productos'} />
+                    </a>
+                  </ListItem>
+                </ListItemButton>
+
+                <ListItemButton onClick={() => { }}>
+                  <ListItem>
+                    <Category />
+                    <ListItemText primary={'JobOrder'} />
+                  </ListItem>
+                </ListItemButton>
+
+
+                <ListItemButton onClick={() => { }}>
+                  <ListItem sx={{ ml: 2 }}>
+                    <a href="/joborder/add">
+
+                    <Category />
+                    <ListItemText secondary={'Crear Joborder'} />
+                    </a>
+                  </ListItem>
+                </ListItemButton>
+                
+                <ListItemButton onClick={() => { }}>
+                  <ListItem sx={{ ml: 2 }}>
+                    <a href="/joborder">
+
+                    <Category />
+                    <ListItemText secondary={'Visualizar joborder'} />
                     </a>
                   </ListItem>
                 </ListItemButton>

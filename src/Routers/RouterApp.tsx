@@ -10,6 +10,7 @@ import { Home } from '@mui/icons-material'
 import { HomeRouter } from './HomeRouter'
 import { ProductRoutes } from './ProductsRputes'
 import { CustomerRoute } from './CustomerRouter'
+import { JobOrderRoutes } from './JobOrderRputes'
 
 export const RouterApp = () => {
   
@@ -22,6 +23,7 @@ export const RouterApp = () => {
       <Route path='/Proveedores/*' element={<AuthRouter><ProveedoresRoutes/></AuthRouter>} />
       <Route path='/Productos/*' element={<AuthRouter><ProductRoutes/></AuthRouter>} />
       <Route path='/Customer/*' element={<AuthRouter><CustomerRoute/></AuthRouter>} />
+      <Route path='/Joborder/*' element={<AuthRouter><JobOrderRoutes/></AuthRouter>} />
       <Route path='/home/*' element={<AuthRouter><HomeRouter/></AuthRouter>} />
     </Routes>
   )
