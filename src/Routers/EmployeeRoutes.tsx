@@ -4,7 +4,7 @@ import { Route, Router, Routes } from 'react-router-dom'
 import { Navbar, SideBar } from '../Common/layout'
 import { AddEmployePage } from '../pages/employee/addEmployePage'
 import { EmployeePage } from '../pages/employee/employeePage'
-import { EditEmployePage } from '../pages/employee/EditEmployePage'
+
 
 export const EmployeeRoutes = () => {
   return (
@@ -23,7 +23,7 @@ export const EmployeeRoutes = () => {
       <Routes>
         <Route path='/add' element={<AddEmployePage/>}/>
         <Route path='/' element={<EmployeePage/>}/>
-        <Route path='/edit/:id' element={<EditEmployePage/>}></Route>
+        
       </Routes>
   
     </Box>
