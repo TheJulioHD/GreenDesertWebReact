@@ -8,8 +8,10 @@ import Addinvetorypage from '../pages/Inventory/addinvetorypage'
 import Inventoriypage from '../pages/Inventory/Inventoriypage'
 import Proveedorespage from '../pages/Proveedores/proveedorespage'
 import { AddProveedorespage } from '../pages/Proveedores/addproveedorespage'
+import { AddJobOrderpage } from '../pages/JobOrder/addJobOrderpage'
+import JobOrderpage from '../pages/JobOrder/JobOrderpage'
 
-export const ProveedoresRoutes = () => {
+export const JobOrderRoutes = () => {
   return (
     
 
@@ -22,8 +24,8 @@ export const ProveedoresRoutes = () => {
       <Toolbar/>
       
       <Routes>
-      <Route path='/add' element={<AddProveedorespage/>}/>
-      <Route path='/' element={<Proveedorespage/>}/>
+      <Route path='/add' element={<AddJobOrderpage/>}/>
+      <Route path='/' element={<JobOrderpage/>}/>
     </Routes>
   
 

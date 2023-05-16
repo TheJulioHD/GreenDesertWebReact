@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export let uuid :any
 export interface IAuthRouterProps {};
 
-const AuthRouter:React.FunctionComponent<IAuthRouterProps> = (props) => {
+const AuthRouter2:React.FunctionComponent<IAuthRouterProps> = (props) => {
     const { children }:any = props;
     const auth = getAuth()
     const navigate = useNavigate()
@@ -16,12 +16,12 @@ const AuthRouter:React.FunctionComponent<IAuthRouterProps> = (props) => {
     },[auth])
 
     const AuthCheck = onAuthStateChanged(auth, (user)=>{
-        if(user){
-            uuid = user.uid
+        if(!user){
+            
             setLoading(false)
         }else{
             console.log('unauthorized')
-            navigate('/auth/signin')
+            navigate('/welcome')
         }
     });
     if(loading) return<p>Loading ....</p>
@@ -31,4 +31,4 @@ const AuthRouter:React.FunctionComponent<IAuthRouterProps> = (props) => {
   )
 }
 
-export default AuthRouter
+export default AuthRouter2

@@ -1,17 +1,18 @@
 import { createTheme } from "@mui/material";
 import { red } from "@mui/material/colors";
+import { Color } from "./Colors/Color";
 
 
 export const GreenTheme = createTheme({
 
   palette: {
     primary: {
-      light: '#1e8449',
-      main: '#196f3d',
-      dark: '#145a32'
+      light: Color.GreenUltraLight,
+      main: Color.GreenLight,
+      dark: Color.Green
     },
     secondary: {
-      main: '#03C988'
+      main: Color.Yellow
     },
     error: {
       main: red[400],

@@ -3,7 +3,7 @@ export interface loginModel{
     uuid?:string,
     email:string,
     password:string,
-    status?:string,
+    status?:boolean,
     role?:number,
     employee?:number,
 
