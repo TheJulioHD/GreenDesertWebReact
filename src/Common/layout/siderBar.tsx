@@ -2,8 +2,51 @@ import { Category, Hail, Inventory, LocalShipping, Menu, MenuBook, Person, Turne
 import { Box, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from "@mui/material"
 import { Color } from "../../Theme/Colors/Color";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useState, useEffect } from "react";
 
 export const SideBar = ({ drawerWidth = 340 }) => {
+
+  const [disable, setDisable] = useState(false)
+    const [uuid, setuuid] = useState<any>()
+    const auth = getAuth()
+    const [loading, setLoading] = useState(false)
+    const [user2, setUser2]= useState<any>({})
+
+
+    useEffect(() => {
+        AuthCheck()
+    }, [auth])
+
+    const AuthCheck = onAuthStateChanged(auth, (user) => {
+        if (user) {
+             setuuid(user.uid) 
+            setLoading(false)
+            console.log(user.uid)
+            
+                axios({
+                    method: 'GET',
+                    url: `https://apigreendesert.onrender.com/user/one/${user.uid}`
+                }).then((res) => {
+                    console.log(res.data)
+                    setUser2(res.data)
+                    console.log(user2)
+
+                    if(user2.role.id == 1){
+                        console.log('soy operador')
+                        setDisable(true)
+                    }else{
+                        console.log('soy admin')
+                        setDisable(false)
+                    }
+                })
+            
+
+        } else {
+            
+        }
+    });
 
   const navigate = useNavigate();
   let options = ['Inventario', 'Clientes', 'Empleados', 'Proveedores'];
@@ -63,7 +106,7 @@ export const SideBar = ({ drawerWidth = 340 }) => {
                 </ListItemButton>
 
 
-                <ListItemButton onClick={() => { }}>
+                <ListItemButton disabled={disable} onClick={() => { }}>
                   <ListItem sx={{ ml: 2 }}>
                     <a href="/employee/add">
 
@@ -73,7 +116,7 @@ export const SideBar = ({ drawerWidth = 340 }) => {
                   </ListItem>
                 </ListItemButton>
 
-                <ListItemButton onClick={() => { }}>
+                <ListItemButton disabled={disable} onClick={() => { }}>
                   <ListItem sx={{ ml: 2 }}>
                     <a href="/employee">
 
@@ -84,7 +127,7 @@ export const SideBar = ({ drawerWidth = 340 }) => {
                   </ListItem>
                 </ListItemButton>
 
-                <ListItemButton onClick={() => { }}>
+                <ListItemButton  onClick={() => { }}>
                   <ListItem>
                     <Hail />
                     <ListItemText primary={'Clientes'} />
@@ -92,7 +135,7 @@ export const SideBar = ({ drawerWidth = 340 }) => {
                 </ListItemButton>
 
 
-                <ListItemButton onClick={() => { }}>
+                <ListItemButton disabled={disable} onClick={() => { }}>
                   <ListItem sx={{ ml: 2 }}>
                     <a href="/customer/add">
 
@@ -102,7 +145,7 @@ export const SideBar = ({ drawerWidth = 340 }) => {
                   </ListItem>
                 </ListItemButton>
 
-                <ListItemButton onClick={() => { }}>
+                <ListItemButton disabled={disable} onClick={() => { }}>
                   <ListItem sx={{ ml: 2 }}>
                     <a href="/customer">
 
@@ -120,7 +163,7 @@ export const SideBar = ({ drawerWidth = 340 }) => {
                 </ListItemButton>
 
 
-                <ListItemButton onClick={() => { }}>
+                <ListItemButton disabled={disable} onClick={() => { }}>
                   <ListItem sx={{ ml: 2 }}>
                     <a href="/invetory">
                       <Inventory />
@@ -129,14 +172,14 @@ export const SideBar = ({ drawerWidth = 340 }) => {
                   </ListItem>
                 </ListItemButton>
 
-                <ListItemButton onClick={() => {  }}>
+                <ListItemButton disabled={disable} onClick={() => {  }}>
                   <ListItem>
                     <LocalShipping />
                     <ListItemText primary={'Provedores'} />
                   </ListItem>
                 </ListItemButton>
 
-                <ListItemButton onClick={() => { }}>
+                <ListItemButton disabled={disable} onClick={() => { }}>
                   <ListItem sx={{ ml: 2 }}>
                     <a href="/proveedores/add">
 
@@ -146,7 +189,7 @@ export const SideBar = ({ drawerWidth = 340 }) => {
                   </ListItem>
                 </ListItemButton>
 
-                <ListItemButton onClick={() => {  }}>
+                <ListItemButton disabled={disable} onClick={() => {  }}>
                   <ListItem sx={{ ml: 2 }}>
                     <a href="/proveedores">
 
@@ -164,7 +207,7 @@ export const SideBar = ({ drawerWidth = 340 }) => {
                 </ListItemButton>
 
 
-                <ListItemButton onClick={() => { }}>
+                <ListItemButton disabled={disable} onClick={() => { }}>
                   <ListItem sx={{ ml: 2 }}>
                     <a href="/productos">
 
@@ -174,7 +217,7 @@ export const SideBar = ({ drawerWidth = 340 }) => {
                   </ListItem>
                 </ListItemButton>
 
-                <ListItemButton onClick={() => { }}>
+                <ListItemButton  onClick={() => { }}>
                   <ListItem>
                     <Category />
                     <ListItemText primary={'JobOrder'} />
@@ -182,7 +225,7 @@ export const SideBar = ({ drawerWidth = 340 }) => {
                 </ListItemButton>
 
 
-                <ListItemButton onClick={() => { }}>
+                <ListItemButton disabled={disable} onClick={() => { }}>
                   <ListItem sx={{ ml: 2 }}>
                     <a href="/joborder/add">
 
@@ -192,7 +235,7 @@ export const SideBar = ({ drawerWidth = 340 }) => {
                   </ListItem>
                 </ListItemButton>
                 
-                <ListItemButton onClick={() => { }}>
+                <ListItemButton disabled={disable} onClick={() => { }}>
                   <ListItem sx={{ ml: 2 }}>
                     <a href="/joborder">
 

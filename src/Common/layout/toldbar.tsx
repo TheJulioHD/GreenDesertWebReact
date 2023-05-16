@@ -7,7 +7,7 @@ import { Color } from '../../Theme/Colors/Color'
 export const Toldbar = () => {
 
   const navigate = useNavigate();
-
+  
 
   return (
     <AppBar 
@@ -43,7 +43,7 @@ export const Toldbar = () => {
           >
           
             <IconButton 
-              onClick={() => {navigate('/welcome')}}
+              onClick={() => {navigate('/home')}}
               sx={{
                 backgroundColor: '', 
                 color: 'white'

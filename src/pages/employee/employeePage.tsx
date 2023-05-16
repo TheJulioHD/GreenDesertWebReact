@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import { useFormik } from 'formik'
 import { employeeModel } from '../../assets/models/employee.model'
 import * as yup from 'yup'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 let idTest : number
 let idt:number
@@ -33,7 +34,7 @@ const getId = (id : number):any  => {
           'Los datos han sido eliminados',
           'success'
           )
-          axios.delete(`http://localhost:3000/employee/delete/${id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
+          axios.delete(`https://apigreendesert.onrender.com/employee/delete/${id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
       }
     })
   )
@@ -46,6 +47,45 @@ const getId = (id : number):any  => {
 
 
 export const EmployeePage = () => {
+  const [disable, setDisable] = useState(false)
+    const [uuid, setuuid] = useState<any>()
+    const auth = getAuth()
+    const [loading, setLoading] = useState(false)
+    const [user2, setUser2]= useState<any>({})
+
+
+    useEffect(() => {
+        AuthCheck()
+    }, [auth])
+
+    const AuthCheck = onAuthStateChanged(auth, (user) => {
+        if (user) {
+             setuuid(user.uid) 
+            setLoading(false)
+            console.log(user.uid)
+            
+                axios({
+                    method: 'GET',
+                    url: `https://apigreendesert.onrender.com/user/one/${user.uid}`
+                }).then((res) => {
+                    console.log(res.data)
+                    setUser2(res.data)
+                    console.log(user2)
+
+                    if(user2.role.id == 1){
+                        console.log('soy operador')
+                        setDisable(true)
+                    }else{
+                        console.log('soy admin')
+                        setDisable(false)
+                    }
+                })
+            
+
+        } else {
+            
+        }
+    });
   
   const [user, setUser] = useState<userModel[]>([])
   const navigate= useNavigate()
@@ -57,7 +97,7 @@ export const EmployeePage = () => {
 
       await axios({
         method: 'GET',
-        url: `http://localhost:3000/employee/${idv2}`
+        url: `https://apigreendesert.onrender.com/employee/${idv2}`
       }).then(async(res) => {
         console.log("x" + res)
   
@@ -90,7 +130,7 @@ export const EmployeePage = () => {
 
     // axios({
     //   method: 'GET',
-    //   url: `http://localhost:3000/employee/${idv}`
+    //   url: `https://apigreendesert.onrender.com/employee/${idv}`
     // }).then((res) => {
     //   console.log("x" + res)
 
@@ -170,11 +210,11 @@ export const EmployeePage = () => {
         status: true
       }
       console.log(newEmployee)
-      //axios.put(`http://localhost:3000/employee/update/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
+      //axios.put(`https://apigreendesert.onrender.com/employee/update/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
 
       await axios({
         method: 'PUT',
-        url: `http://localhost:3000/employee/update/${idv}`,
+        url: `https://apigreendesert.onrender.com/employee/update/${idv}`,
         data: JSON.stringify(newEmployee),
         headers: {
           'Content-Type': 'application/json'
@@ -195,7 +235,7 @@ export const EmployeePage = () => {
    useEffect(()=>{
     axios({
       method:'GET',
-      url:'http://localhost:3000/user/all'
+      url:'https://apigreendesert.onrender.com/user/all'
     }).then((res) =>{
       console.log(res.data)
       setUser(res.data)
@@ -239,7 +279,7 @@ export const EmployeePage = () => {
                             <TableCell >{t.employee.phonenumber}</TableCell>
                             
                             <TableCell>
-                              <Button color='success' variant='outlined'  onClick={async()=>{
+                              <Button color='success' disabled={disable} variant='outlined'  onClick={async()=>{
                                 await getIdv5(t.id).then(async(res)=>{
                                  await handleOpen()
 
@@ -249,11 +289,11 @@ export const EmployeePage = () => {
                               }}>Edit</Button>
                               
 
-                              &nbsp; <Button color='error' variant="outlined" onClick={()=>{
+                              &nbsp; <Button color='error' disabled={disable} variant="outlined" onClick={()=>{
 
                               getId(t.id)
 
-                              // axios.delete(`http://localhost:3000/employee/delete/${t.id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
+                              // axios.delete(`https://apigreendesert.onrender.com/employee/delete/${t.id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
                             }}>Deleted</Button></TableCell>
                             
                           </TableRow>

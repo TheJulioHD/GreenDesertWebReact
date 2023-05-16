@@ -10,6 +10,7 @@ import * as yup from 'yup'
 import { IInventory } from '../../assets/models/inventory.model'
 import { uuid } from '../../services/auth/AuthRouter'
 import { customerModel } from '../../assets/models/customer.model'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 
 let idTest: number
@@ -60,12 +61,52 @@ const getId = (id: number): any => {
                     'Los datos han sido eliminados',
                     'success'
                 )
-                axios.delete(`http://localhost:3000/customer/delete/${id}`).then((res) => { console.log(res) }).catch((err) => { console.log(err) })
+                axios.delete(`https://apigreendesert.onrender.com/customer/delete/${id}`).then((res) => { console.log(res) }).catch((err) => { console.log(err) })
             }
         })
     )
 }
 const Customerpage = () => {
+    const [disable, setDisable] = useState(false)
+    const [uuid, setuuid] = useState<any>()
+    const auth = getAuth()
+    const [loading, setLoading] = useState(false)
+    const [user2, setUser2]= useState<any>({})
+
+
+    useEffect(() => {
+        AuthCheck()
+    }, [auth])
+
+    const AuthCheck = onAuthStateChanged(auth, (user) => {
+        if (user) {
+             setuuid(user.uid) 
+            setLoading(false)
+            console.log(user.uid)
+            
+                axios({
+                    method: 'GET',
+                    url: `https://apigreendesert.onrender.com/user/one/${user.uid}`
+                }).then((res) => {
+                    console.log(res.data)
+                    setUser2(res.data)
+                    console.log(user2)
+
+                    if(user2.role.id == 1){
+                        console.log('soy operador')
+                        setDisable(true)
+                    }else{
+                        console.log('soy admin')
+                        setDisable(false)
+                    }
+                })
+            
+
+        } else {
+            
+        }
+    });
+
     const [user, setUser] = useState<customerModel[]>([])
     const navigate = useNavigate()
     const [idv, setIdv] = useState({
@@ -76,7 +117,7 @@ const Customerpage = () => {
 
             await axios({
                 method: 'GET',
-                url: `http://localhost:3000/customer/${idv2}`
+                url: `https://apigreendesert.onrender.com/customer/${idv2}`
             }).then(async (res) => {
                 console.log("x" + res)
 
@@ -107,7 +148,7 @@ const Customerpage = () => {
 
         // axios({
         //   method: 'GET',
-        //   url: `http://localhost:3000/employee/${idv}`
+        //   url: `https://apigreendesert.onrender.com/employee/${idv}`
         // }).then((res) => {
         //   console.log("x" + res)
 
@@ -190,11 +231,11 @@ const Customerpage = () => {
             }
 
             console.log(newCustomer)
-            //axios.put(`http://localhost:3000/employee/update/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
+            //axios.put(`https://apigreendesert.onrender.com/employee/update/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
 
             await axios({
                 method: 'PUT',
-                url: `http://localhost:3000/customer/update/${idv}`,
+                url: `https://apigreendesert.onrender.com/customer/update/${idv}`,
                 data: JSON.stringify(newCustomer),
                 headers: {
                     'Content-Type': 'application/json'
@@ -218,7 +259,7 @@ const Customerpage = () => {
     useEffect(() => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3000/customer/all'
+            url: 'https://apigreendesert.onrender.com/customer/all'
         }).then((res) => {
             console.log(res.data)
             setUser(res.data)
@@ -265,7 +306,7 @@ const Customerpage = () => {
                                     <TableCell>{t.phonenumber}</TableCell>
                                     <TableCell>{`${t.status}`}</TableCell>
                                     <TableCell>
-                                        <Button color='success' variant='outlined' onClick={async () => {
+                                        <Button color='success' disabled={disable} variant='outlined' onClick={async () => {
                                             await getIdv5(t.id).then(async (res) => {
                                                 await handleOpen2()
 
@@ -275,11 +316,11 @@ const Customerpage = () => {
                                         }}>Edit</Button>
 
 
-                                        &nbsp; <Button color='error' variant="outlined" onClick={() => {
+                                        &nbsp; <Button color='error' disabled={disable} variant="outlined" onClick={() => {
 
                                             getId(t.id)
 
-                                            // axios.delete(`http://localhost:3000/employee/delete/${t.id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
+                                            // axios.delete(`https://apigreendesert.onrender.com/employee/delete/${t.id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
                                         }}>Deleted</Button>  &nbsp;
 
                                     </TableCell>

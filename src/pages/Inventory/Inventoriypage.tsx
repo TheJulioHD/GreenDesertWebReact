@@ -12,6 +12,7 @@ import { IProduct } from '../../assets/models/product.model'
 import { IInventory } from '../../assets/models/inventory.model'
 import { uuid } from '../../services/auth/AuthRouter'
 import MUIDataTable from "mui-datatables";
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 
 let idTest: number
@@ -62,12 +63,52 @@ const getId = (id: number): any => {
                     'Los datos han sido eliminados',
                     'success'
                 )
-                axios.delete(`http://localhost:3000/inventory/delete/${id}`).then((res) => { console.log(res) }).catch((err) => { console.log(err) })
+                axios.delete(`https://apigreendesert.onrender.com/inventory/delete/${id}`).then((res) => { console.log(res) }).catch((err) => { console.log(err) })
             }
         })
     )
 }
 const Inventoriypage = () => {
+    const [disable, setDisable] = useState(false)
+    const [uuid, setuuid] = useState<any>()
+    const auth = getAuth()
+    const [loading, setLoading] = useState(false)
+    const [user2, setUser2]= useState<any>({})
+
+
+    useEffect(() => {
+        AuthCheck()
+    }, [auth])
+
+    const AuthCheck = onAuthStateChanged(auth, (user) => {
+        if (user) {
+             setuuid(user.uid) 
+            setLoading(false)
+            console.log(user.uid)
+            
+                axios({
+                    method: 'GET',
+                    url: `https://apigreendesert.onrender.com/user/one/${user.uid}`
+                }).then((res) => {
+                    console.log(res.data)
+                    setUser2(res.data)
+                    console.log(user2)
+
+                    if(user2.role.id == 1){
+                        console.log('soy operador')
+                        setDisable(true)
+                    }else{
+                        console.log('soy admin')
+                        setDisable(false)
+                    }
+                })
+            
+
+        } else {
+            
+        }
+    });
+
     const [user, setUser] = useState<IInventory[]>([])
     const navigate = useNavigate()
     const [idv, setIdv] = useState({
@@ -78,7 +119,7 @@ const Inventoriypage = () => {
 
             await axios({
                 method: 'GET',
-                url: `http://localhost:3000/inventory/${idv2}`
+                url: `https://apigreendesert.onrender.com/inventory/${idv2}`
             }).then(async (res) => {
                 console.log("x" + res)
 
@@ -105,7 +146,7 @@ const Inventoriypage = () => {
 
         // axios({
         //   method: 'GET',
-        //   url: `http://localhost:3000/employee/${idv}`
+        //   url: `https://apigreendesert.onrender.com/employee/${idv}`
         // }).then((res) => {
         //   console.log("x" + res)
 
@@ -173,11 +214,11 @@ const Inventoriypage = () => {
                 
             }
             console.log(newInventory)
-            //axios.put(`http://localhost:3000/employee/update/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
+            //axios.put(`https://apigreendesert.onrender.com/employee/update/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
 
             await axios({
                 method: 'PUT',
-                url: `http://localhost:3000/inventory/update/${idv}`,
+                url: `https://apigreendesert.onrender.com/inventory/update/${idv}`,
                 data: JSON.stringify(newInventory),
                 headers: {
                     'Content-Type': 'application/json'
@@ -201,14 +242,14 @@ const Inventoriypage = () => {
     useEffect(() => {
         axios({
             method: 'GET',
-            url: 'http://localhost:3000/inventory/all'
+            url: 'https://apigreendesert.onrender.com/inventory/all'
         }).then((res) => {
             console.log(res.data)
             setUser(res.data)
             console.log(JSON.stringify(uid))
             axios({
                 method: 'GET',
-                url: `http://localhost:3000/user/one${uid}`
+                url: `https://apigreendesert.onrender.com/user/one${uid}`
             }).then((res)=>{
                 console.log(res.data)
             })
@@ -248,7 +289,7 @@ const handelid=()=>{
                                 <TableCell>{t.spot}</TableCell>
                                 <TableCell>{t.product.name}</TableCell>
                                 <TableCell>
-                                    <Button color='success' variant='outlined' onClick={async () => {
+                                    <Button color='success' disabled={disable} variant='outlined' onClick={async () => {
                                         await getIdv5(t.id).then(async (res) => {
                                             await handleOpen2()
 
@@ -258,11 +299,11 @@ const handelid=()=>{
                                     }}>Edit</Button>
 
 
-                                    &nbsp; <Button color='error' variant="outlined" onClick={() => {
+                                    &nbsp; <Button color='error' disabled={disable} variant="outlined" onClick={() => {
 
                                         getId(t.id)
 
-                                        // axios.delete(`http://localhost:3000/employee/delete/${t.id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
+                                        // axios.delete(`https://apigreendesert.onrender.com/employee/delete/${t.id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
                                     }}>Deleted</Button>  &nbsp;
                                     
                                 </TableCell>

@@ -1,7 +1,7 @@
 import { Person } from '@mui/icons-material'
 import { Button, Grid, TextField, Typography } from '@mui/material'
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
-import React, { useState } from 'react'
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from 'firebase/auth'
+import React, { useEffect, useState } from 'react'
 import { json, useNavigate } from 'react-router-dom'
 import { employeeModel } from '../../assets/models/employee.model'
 import axios from 'axios'
@@ -13,9 +13,45 @@ import { customerModel } from '../../assets/models/customer.model'
 
 export const AddCustomerpage = () => {
   
-  const auth= getAuth();
-  const navigate = useNavigate()
-  const [authing, setAuthing] = useState(false)
+  const [disable, setDisable] = useState(false)
+  const [uuid, setuuid] = useState<any>()
+  const auth = getAuth()
+  const [loading, setLoading] = useState(false)
+  const [user2, setUser2]= useState<any>({})
+
+
+  useEffect(() => {
+      AuthCheck()
+  }, [auth])
+
+  const AuthCheck = onAuthStateChanged(auth, (user) => {
+      if (user) {
+           setuuid(user.uid) 
+          setLoading(false)
+          console.log(user.uid)
+          
+              axios({
+                  method: 'GET',
+                  url: `https://apigreendesert.onrender.com/user/one/${user.uid}`
+              }).then((res) => {
+                  console.log(res.data)
+                  setUser2(res.data)
+                  console.log(user2)
+
+                  if(user2.role.id == 1){
+                      console.log('soy operador')
+                      setDisable(true)
+                  }else{
+                      console.log('soy admin')
+                      setDisable(false)
+                  }
+              })
+          
+
+      } else {
+          
+      }
+  });
 
   // const[employee, setEmployee] = useState<employeeModel>({
   //     name: '',
@@ -208,7 +244,7 @@ export const AddCustomerpage = () => {
             <br />
             
           <Grid item>
-            <Button variant='contained' type='submit'>Registrar customer</Button>
+            <Button variant='contained' disabled={disable} type='submit'>Registrar customer</Button>
           </Grid>
         </form>
       </Grid>
