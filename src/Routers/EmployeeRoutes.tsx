@@ -23,7 +23,7 @@ export const EmployeeRoutes = () => {
       <Routes>
         <Route path='/add' element={<AddEmployePage/>}/>
         <Route path='/' element={<EmployeePage/>}/>
-        <Route path='/edit/:id' element={<EditEmployePage/>}></Route>
+        
       </Routes>
   
     </Box>
