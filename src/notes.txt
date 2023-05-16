@@ -1,0 +1,11 @@
+Empleado: 
+
+ nombre
+ apellidos
+ cumpleaños
+ emailnumero de telefono
+ estado
+ password
+ role
+
+ 

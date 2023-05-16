@@ -1,10 +1,9 @@
 export interface userModel{
-
     uuid:string,
-    email:string,
+    email?:string,
     password:string,
-    status:string,
+    status?:boolean,
     role:number,
-    employee:number,
-
+    employee?:number,
+    
 }

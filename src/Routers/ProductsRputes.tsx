@@ -3,12 +3,14 @@ import React from 'react'
 import { Route, Router, Routes } from 'react-router-dom'
 import { Navbar, SideBar } from '../Common/layout'
 import { AddEmployePage } from '../pages/employee/addEmployePage'
-import { EmployeePage } from '../pages/employee/employeePage'
-import { EditEmployePage } from '../pages/employee/EditEmployePage'
+import Addinvetorypage from '../pages/Inventory/addinvetorypage'
 
-export const EmployeeRoutes = () => {
+import Proveedorespage from '../pages/Proveedores/proveedorespage'
+import { AddProveedorespage } from '../pages/Proveedores/addproveedorespage'
+import Productpage from '../pages/Product/productpage'
+
+export const ProductRoutes = () => {
   return (
-    
     
 
     <Box sx={{display: 'flex'}}>
@@ -17,15 +19,13 @@ export const EmployeeRoutes = () => {
     <SideBar drawerWidth={240}/>
 
     <Box component='main' sx={{flexGrow: 1, p: 3}}>
-      
       <Toolbar/>
       
       <Routes>
-        <Route path='/add' element={<AddEmployePage/>}/>
-        <Route path='/' element={<EmployeePage/>}/>
-        <Route path='/edit/:id' element={<EditEmployePage/>}></Route>
-      </Routes>
+      <Route path='/' element={<Productpage/>}/>
+    </Routes>
   
+
     </Box>
     
   </Box>
