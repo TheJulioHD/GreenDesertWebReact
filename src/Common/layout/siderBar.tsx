@@ -237,11 +237,13 @@ export const SideBar = ({ drawerWidth = 340 }) => {
                 
                 <ListItemButton disabled={disable} onClick={() => { }}>
                   <ListItem sx={{ ml: 2 }}>
-                    <a href="/joborder">
+                  <Link to={"/joborder/"}>
+
 
                     <Category />
                     <ListItemText secondary={'Visualizar joborder'} />
-                    </a>
+                  </Link>
+                    
                   </ListItem>
                 </ListItemButton>
 
