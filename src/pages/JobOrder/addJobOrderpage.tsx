@@ -12,45 +12,45 @@ import { IProvider } from '../../assets/models/provider.model'
 import { Ijobordermodel } from '../../assets/models/joborder.model'
 
 export const AddJobOrderpage = () => {
-  const [disable, setDisable] = useState(false)
-  const [uuid, setuuid] = useState<any>()
-  const auth = getAuth()
-  const [loading, setLoading] = useState(false)
-  const [user2, setUser2]= useState<any>({})
+  // const [disable, setDisable] = useState(false)
+  // const [uuid, setuuid] = useState<any>()
+  // const auth = getAuth()
+  // const [loading, setLoading] = useState(false)
+  // const [user2, setUser2]= useState<any>({})
 
 
-  useEffect(() => {
-      AuthCheck()
-  }, [auth])
+  // useEffect(() => {
+  //     AuthCheck()
+  // }, [auth])
 
-  const AuthCheck = onAuthStateChanged(auth, (user) => {
-      if (user) {
-           setuuid(user.uid) 
-          setLoading(false)
-          console.log(user.uid)
+  // const AuthCheck = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //          setuuid(user.uid) 
+  //         setLoading(false)
+  //         console.log(user.uid)
           
-              axios({
-                  method: 'GET',
-                  url: `https://apigreendesert.onrender.com/user/one/${user.uid}`
-              }).then((res) => {
-                  console.log(res.data)
-                  setUser2(res.data)
-                  console.log(user2)
+  //             axios({
+  //                 method: 'GET',
+  //                 url: `http://localhost:3000/user/one/${user.uid}`
+  //             }).then((res) => {
+  //                 console.log(res.data)
+  //                 setUser2(res.data)
+  //                 console.log(user2)
 
-                  if(user2.role.id == 1){
-                      console.log('soy operador')
-                      setDisable(true)
-                  }else{
-                      console.log('soy admin')
-                      setDisable(false)
-                  }
-              })
+  //                 if(user2.role.id == 1){
+  //                     console.log('soy operador')
+  //                     setDisable(true)
+  //                 }else{
+  //                     console.log('soy admin')
+  //                     setDisable(false)
+  //                 }
+  //             })
           
 
-      } else {
+  //     } else {
           
-      }
-  });
+  //     }
+  // });
 
   // const[employee, setEmployee] = useState<employeeModel>({
   //     name: '',
@@ -63,7 +63,7 @@ export const AddJobOrderpage = () => {
   //     user: {}
 
   // })
-  const url = 'https://apigreendesert.onrender.com/user'
+  const url = 'http://localhost:3000/user'
   // const handleimputChange = ({target:{name, value}}:any) =>{
 
   //    console.log(evt.currentTarget.value)
@@ -87,7 +87,7 @@ export const AddJobOrderpage = () => {
   //   }
   //   await axios({
   //     method:'POST',
-  //     url:'https://apigreendesert.onrender.com/employee',
+  //     url:'http://localhost:3000/employee',
   //     data:JSON.stringify(newEmployee),
   //     headers:{
   //       'Content-Type':'application/json'
@@ -154,7 +154,7 @@ export const AddJobOrderpage = () => {
       console.log(newjoborder)
       await axios({
           method: 'POST',
-          url: 'https://apigreendesert.onrender.com/jobOrder',
+          url: 'http://localhost:3000/jobOrder',
           data: JSON.stringify(newjoborder),
           headers: {
             'Content-Type': 'application/json'
@@ -169,7 +169,7 @@ export const AddJobOrderpage = () => {
               })})
       // await axios({
       //   method: 'POST',
-      //   url: 'https://apigreendesert.onrender.com/provider',
+      //   url: 'http://localhost:3000/provider',
       //   data: JSON.stringify(newProvider),
       //   headers: {
       //     'Content-Type': 'application/json'
@@ -182,7 +182,7 @@ export const AddJobOrderpage = () => {
       //   }
       //   axios({
       //     method: 'POST',
-      //     url: `https://apigreendesert.onrender.com/product/upload${JSON.stringify(res.data.id)}`,
+      //     url: `http://localhost:3000/product/upload${JSON.stringify(res.data.id)}`,
       //     data: JSON.stringify(newimg),
       //     headers: {
       //       'Content-Type': 'application/json'
@@ -271,7 +271,7 @@ export const AddJobOrderpage = () => {
 
 
             <Grid item>
-              <Button disabled={disable} variant='contained' type='submit'>Registrar joborder</Button>
+              <Button  variant='contained' type='submit'>Registrar joborder</Button>
             </Grid>
           </form>
         </Grid>

@@ -37,52 +37,52 @@ const getId = (id: number): any => {
                     'Los datos han sido eliminados',
                     'success'
                 )
-                axios.delete(`https://apigreendesert.onrender.com/product/delete/${id}`).then((res) => { console.log(res) }).catch((err) => { console.log(err) })
+                axios.delete(`http://localhost:3000/product/delete/${id}`).then((res) => { console.log(res) }).catch((err) => { console.log(err) })
             }
         })
     )
 }
 const Productpage = () => {
 
-    const [disable, setDisable] = useState(false)
-    const [uuid, setuuid] = useState<any>()
-    const auth = getAuth()
-    const [loading, setLoading] = useState(false)
-    const [user2, setUser2]= useState<any>({})
+    // const [disable, setDisable] = useState(false)
+    // const [uuid, setuuid] = useState<any>()
+    // const auth = getAuth()
+    // const [loading, setLoading] = useState(false)
+    // const [user2, setUser2]= useState<any>({})
 
 
-    useEffect(() => {
-        AuthCheck()
-    }, [auth])
+    // useEffect(() => {
+    //     AuthCheck()
+    // }, [auth])
 
-    const AuthCheck = onAuthStateChanged(auth, (user) => {
-        if (user) {
-             setuuid(user.uid) 
-            setLoading(false)
-            console.log(user.uid)
+    // const AuthCheck = onAuthStateChanged(auth, (user) => {
+    //     if (user) {
+    //          setuuid(user.uid) 
+    //         setLoading(false)
+    //         console.log(user.uid)
             
-                axios({
-                    method: 'GET',
-                    url: `https://apigreendesert.onrender.com/user/one/${user.uid}`
-                }).then((res) => {
-                    console.log(res.data)
-                    setUser2(res.data)
-                    console.log(user2)
+    //             axios({
+    //                 method: 'GET',
+    //                 url: `http://localhost:3000/user/one/${user.uid}`
+    //             }).then((res) => {
+    //                 console.log(res.data)
+    //                 setUser2(res.data)
+    //                 console.log(user2)
 
-                    if(user2.role.id == 1){
-                        console.log('soy operador')
-                        setDisable(true)
-                    }else{
-                        console.log('soy admin')
-                        setDisable(false)
-                    }
-                })
+    //                 if(user2.role.id == 1){
+    //                     console.log('soy operador')
+    //                     setDisable(true)
+    //                 }else{
+    //                     console.log('soy admin')
+    //                     setDisable(false)
+    //                 }
+    //             })
             
 
-        } else {
+    //     } else {
             
-        }
-    });
+    //     }
+    // })
     const [user, setUser] = useState<IProvider[]>([])
     const navigate = useNavigate()
     const [idv, setIdv] = useState({
@@ -93,7 +93,7 @@ const Productpage = () => {
 
             await axios({
                 method: 'GET',
-                url: `https://apigreendesert.onrender.com/product/${idv2}`
+                url: `http://localhost:3000/product/${idv2}`
             }).then(async (res) => {
                 console.log("x" + res)
 
@@ -124,7 +124,7 @@ const Productpage = () => {
 
         // axios({
         //   method: 'GET',
-        //   url: `https://apigreendesert.onrender.com/employee/${idv}`
+        //   url: `http://localhost:3000/employee/${idv}`
         // }).then((res) => {
         //   console.log("x" + res)
 
@@ -195,11 +195,11 @@ const Productpage = () => {
                 
             }
             console.log(newProduct)
-            //axios.put(`https://apigreendesert.onrender.com/employee/update/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
+            //axios.put(`http://localhost:3000/employee/update/${params.id}`, {newEmployee}).then((res)=>{console.log(res.status)}).catch((err)=>{console.log(err)})
 
             await axios({
                 method: 'PUT',
-                url: `https://apigreendesert.onrender.com/product/update/${idv}`,
+                url: `http://localhost:3000/product/update/${idv}`,
                 data: JSON.stringify(newProduct),
                 headers: {
                     'Content-Type': 'application/json'
@@ -223,7 +223,7 @@ const Productpage = () => {
     useEffect(() => {
         axios({
             method: 'GET',
-            url: 'https://apigreendesert.onrender.com/product/all'
+            url: 'http://localhost:3000/product/all'
         }).then((res) => {
             console.log(res.data)
             setUser(res.data)
@@ -275,7 +275,7 @@ const Productpage = () => {
 
                                         getId(t.id)
 
-                                        // axios.delete(`https://apigreendesert.onrender.com/employee/delete/${t.id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
+                                        // axios.delete(`http://localhost:3000/employee/delete/${t.id}`).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
                                     }}>Deleted</Button>  &nbsp;
 
                                 </TableCell>

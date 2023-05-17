@@ -10,45 +10,45 @@ import { useFormik } from 'formik'
 import Swal from 'sweetalert2'
 
 export const AddEmployePage = () => {
-  const [disable, setDisable] = useState(false)
-    const [uuid, setuuid] = useState<any>()
+  // const [disable, setDisable] = useState(false)
+  //   const [uuid, setuuid] = useState<any>()
     const auth = getAuth()
-    const [loading, setLoading] = useState(false)
-    const [user2, setUser2]= useState<any>({})
+  //   const [loading, setLoading] = useState(false)
+  //   const [user2, setUser2]= useState<any>({})
 
 
-    useEffect(() => {
-        AuthCheck()
-    }, [auth])
+  //   useEffect(() => {
+  //       AuthCheck()
+  //   }, [auth])
 
-    const AuthCheck = onAuthStateChanged(auth, (user) => {
-        if (user) {
-             setuuid(user.uid) 
-            setLoading(false)
-            console.log(user.uid)
+  //   const AuthCheck = onAuthStateChanged(auth, (user) => {
+  //       if (user) {
+  //            setuuid(user.uid) 
+  //           setLoading(false)
+  //           console.log(user.uid)
             
-                axios({
-                    method: 'GET',
-                    url: `https://apigreendesert.onrender.com/user/one/${user.uid}`
-                }).then((res) => {
-                    console.log(res.data)
-                    setUser2(res.data)
-                    console.log(user2)
+  //               axios({
+  //                   method: 'GET',
+  //                   url: `http://localhost:3000/user/one/${user.uid}`
+  //               }).then((res) => {
+  //                   console.log(res.data)
+  //                   setUser2(res.data)
+  //                   console.log(user2)
 
-                    if(user2.role.id == 1){
-                        console.log('soy operador')
-                        setDisable(true)
-                    }else{
-                        console.log('soy admin')
-                        setDisable(false)
-                    }
-                })
+  //                   if(user2.role.id == 1){
+  //                       console.log('soy operador')
+  //                       setDisable(true)
+  //                   }else{
+  //                       console.log('soy admin')
+  //                       setDisable(false)
+  //                   }
+  //               })
             
 
-        } else {
+  //       } else {
             
-        }
-    });
+  //       }
+  //   });
 
   // const[employee, setEmployee] = useState<employeeModel>({
   //     name: '',
@@ -61,7 +61,7 @@ export const AddEmployePage = () => {
   //     user: {}
     
   // })
-  const url= 'https://apigreendesert.onrender.com/user'
+  const url= 'http://localhost:3000/user'
   // const handleimputChange = ({target:{name, value}}:any) =>{
     
   //    console.log(evt.currentTarget.value)
@@ -85,7 +85,7 @@ export const AddEmployePage = () => {
   //   }
   //   await axios({
   //     method:'POST',
-  //     url:'https://apigreendesert.onrender.com/employee',
+  //     url:'http://localhost:3000/employee',
   //     data:JSON.stringify(newEmployee),
   //     headers:{
   //       'Content-Type':'application/json'
@@ -171,7 +171,7 @@ export const AddEmployePage = () => {
         })
         await axios({
           method:'POST',
-          url:'https://apigreendesert.onrender.com/employee',
+          url:'http://localhost:3000/employee',
           data:JSON.stringify(newEmployee),
           headers:{
             'Content-Type':'application/json'
@@ -271,7 +271,7 @@ export const AddEmployePage = () => {
 
             
           <Grid item>
-            <Button variant='contained' disabled={disable} type='submit'>Registrar empleado</Button>
+            <Button variant='contained'  type='submit'>Registrar empleado</Button>
           </Grid>
         </form>
       </Grid>
